@@ -2,7 +2,7 @@
 
   <div class="nav nav-1">
     <section class="flex">
-      <a href="../home.php" class="logo"><span class="fas fa-house"></span>HearthFire</a>
+      <a href="../home.php" class="logo"><span class="fas fa-house"></span><b>HearthFire</b></a>
 
       <ul>
         <li><a href="../post-property.php">post property <span class="fas fa-paper-plane"></span></a></li>

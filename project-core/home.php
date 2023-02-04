@@ -39,11 +39,11 @@
 
     <section class="center">
 
-      <form action="search.php" method="POST">
+      <form action="search.php" method="post">
         <h3>find your perfect home</h3>
         <div class="box">
-          <p>property address <span>*</span></p>
-          <input type="text" name="h_address" maxlength="100" required placeholder="enter property address" class="input">
+          <p>enter location <span>*</span></p>
+          <input type="text" name="h_location" maxlength="100" required placeholder="enter city name" class="input">
         </div>
         <div class="flex">
           <div class="box">
@@ -109,6 +109,24 @@
   </div>
 
   <!-- home section ends -->
+
+
+  <!-- services section starts -->
+
+    <section class="services">
+
+      <div class="box-container">
+
+        <div class="box">
+          <img src="" alt="">
+          <h3></h3>
+        </div>
+
+      </div>
+
+    </section>
+
+  <!-- services section ends -->
 
 
   <!-- footer section starts -->
