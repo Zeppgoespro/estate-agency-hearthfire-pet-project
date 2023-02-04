@@ -1,0 +1,17 @@
+<?php
+
+  $conn = new PDO('mysql:host=mysql-hearthfire; dbname=hearthfire', 'root', 'yesenin');
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  function create_unique_id() {
+    $char = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $char_len = strlen($char);
+    $rand_str = '';
+
+    for ($i = 0; $i < 20; $i++) {
+      $rand_str .= $char[mt_rand(0, $char_len - 1)];
+    }
+    return $rand_str;
+  }
+
+?>
