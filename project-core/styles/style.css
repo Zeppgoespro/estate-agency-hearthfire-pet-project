@@ -500,6 +500,74 @@ section {
   color: var(--main-color);
 }
 
+/* home services section */
+
+.services .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 30rem);
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.services .box-container .box {
+  background-color: var(--white);
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  text-align: center;
+}
+
+.services .box-container .box img {
+  height: 8rem;
+  object-fit: contain;
+  margin: 1rem 0;
+}
+
+.services .box-container .box h3 {
+  padding: 1rem 0;
+  font-size: 2rem;
+  color: var(--black);
+  text-transform: capitalize;
+}
+
+.services .box-container .box p {
+  line-height: 2;
+  font-size: 1.6rem;
+  color: var(--light-color);
+}
+
+/* home listings section */
+
+.listings .box-container {
+  display: grid;
+  gap: 2rem;
+}
+
+.listings .box-container form {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 2rem;
+  background-color: var(--white);
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  align-items: center;
+}
+
+.listings .box-container form .box {
+  flex: 1 1 40rem;
+}
+
+.listings .box-container form .box .thumb {
+  height: 35rem;
+  margin: 2rem 0;
+}
+
+.listings .box-container form .box .thumb img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
 /* media queries */
 
 @media (max-width: 991px) {
