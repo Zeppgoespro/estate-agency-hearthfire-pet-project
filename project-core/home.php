@@ -209,9 +209,9 @@
           <div class="box">
             <input type="hidden" name="property_id" value="<?= $property_id ?>">
             <?php if ($select_saved->rowCount() > 0): ?>
-              <button type="submit" name="save"><i class="fas fa-heart"></i><span>saved</span></button>
+              <button type="submit" name="save" class="save"><i class="fas fa-heart"></i><span>saved</span></button>
             <?php else: ?>
-              <button type="submit" name="save"><i class="far fa-heart"></i><span>save</span></button>
+              <button type="submit" name="save" class="save"><i class="far fa-heart"></i><span>save</span></button>
             <?php endif; ?>
             <div class="thumb">
               <p><i class="fas fa-image"></i><span><?= $total_images ?></span></p>
