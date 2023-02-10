@@ -8,6 +8,8 @@
     $user_id = '';
   endif;
 
+  include './components/save-send.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +41,7 @@
 
     <section class="center">
 
-      <form action="search.php" method="post">
+      <form action="./search.php" method="post">
         <h3>find your perfect home</h3>
         <div class="box">
           <p>enter location <span>*</span></p>
@@ -93,7 +95,7 @@
             </select>
           </div>
         </div>
-        <input type="text" name="h_search" value="search property" class="btn">
+        <input type="submit" name="h_search" value="search property" class="btn">
       </form>
 
     </section>
@@ -227,8 +229,8 @@
           </div>
           <div class="box">
             <p class="price"><i class="fa-solid fa-dollar-sign"></i><span><?= $fetch_listing['price'] ?></span></p>
-            <p class="address"><i class="fas fa-map-marker-alt"></i><span><?= $fetch_listing['address'] ?></span></p>
             <h3 class="name"><?= $fetch_listing['property_name'] ?></h3>
+            <p class="address"><i class="fas fa-map-marker-alt"></i><span><?= $fetch_listing['address'] ?></span></p>
             <div class="flex">
               <p><i class="fas fa-house"></i><span><?= $fetch_listing['type'] ?></span></p>
               <p><i class="fas fa-tag"></i><span><?= $fetch_listing['offer'] ?></span></p>
@@ -252,6 +254,10 @@
 
         ?>
 
+      </div>
+
+      <div style="margin-top: 2rem; text-align: center;">
+        <a href="./listings.php" class="inline-btn">view all</a>
       </div>
 
     </section>

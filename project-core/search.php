@@ -8,6 +8,8 @@
     $user_id = '';
   endif;
 
+  include './components/save-send.php';
+
 ?>
 
 <!DOCTYPE html>
