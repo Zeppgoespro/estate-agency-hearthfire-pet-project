@@ -101,7 +101,7 @@
       <h3>update your account</h3>
       <input type="text" name="name" maxlength="50" placeholder="<?= htmlentities($fetch_account['name']) ?>" class="box">
       <input type="email" name="email" maxlength="50" placeholder="<?= htmlentities($fetch_account['email']) ?>" class="box">
-      <input type="number" name="number" placeholder="<?= htmlentities($fetch_account['number']) ?>" min="0" max="999999999999" maxlength="10" class="box">
+      <input type="number" name="number" placeholder="<?= htmlentities($fetch_account['number']) ?>" min="0" max="999999999999" maxlength="12" class="box">
       <input type="password" name="old_pass" maxlength="50" placeholder="enter your old password" class="box">
       <input type="password" name="new_pass" maxlength="50" placeholder="enter your new password" class="box">
       <input type="password" name="con_pass" maxlength="50" placeholder="confirm your new password" class="box">

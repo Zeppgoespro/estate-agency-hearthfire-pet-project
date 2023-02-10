@@ -683,6 +683,12 @@ section {
   color: var(--main-color);
 }
 
+/* search page - filter section */
+
+.filter-search form {
+  background-color: var(--white);
+}
+
 /* media queries */
 
 @media (max-width: 991px) {

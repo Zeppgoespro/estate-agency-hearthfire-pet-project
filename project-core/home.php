@@ -67,7 +67,8 @@
           <div class="box">
             <p>minimum budget <span>*</span></p>
             <select name="h_min" class="input" required>
-              <option value="5000">5k</option>
+              <option value="0">0</option>
+              <option value="5000" selected>5k</option>
               <option value="10000">10k</option>
               <option value="15000">15k</option>
               <option value="20000">20k</option>
@@ -77,6 +78,9 @@
               <option value="40000">40k</option>
               <option value="45000">45k</option>
               <option value="50000">50k</option>
+              <option value="75000">75k</option>
+              <option value="100000">100k</option>
+              <option value="150000">150k</option>
             </select>
           </div>
           <div class="box">
@@ -92,6 +96,10 @@
               <option value="40000">40k</option>
               <option value="45000">45k</option>
               <option value="50000">50k</option>
+              <option value="75000">75k</option>
+              <option value="100000">100k</option>
+              <option value="150000">150k</option>
+              <option value="100000000000">no limit</option>
             </select>
           </div>
         </div>

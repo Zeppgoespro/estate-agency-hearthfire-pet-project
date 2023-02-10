@@ -79,7 +79,7 @@
       <h3>create an account</h3>
       <input type="text" name="name" required maxlength="50" placeholder="enter your name" class="box">
       <input type="email" name="email" required maxlength="50" placeholder="enter your email" class="box">
-      <input type="number" name="number" required placeholder="enter your number" min="0" max="999999999999" maxlength="10" class="box">
+      <input type="number" name="number" required placeholder="enter your number" min="0" max="999999999999" maxlength="12" class="box">
       <input type="password" name="pass" required maxlength="50" placeholder="enter your password" class="box">
       <input type="password" name="con_pass" required maxlength="50" placeholder="confirm your password" class="box">
       <p>already have an account? <a href="./login.php">login now</a></p>
