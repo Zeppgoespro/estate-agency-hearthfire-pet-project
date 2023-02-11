@@ -242,7 +242,7 @@
             <div class="flex">
               <p><i class="fas fa-house"></i><span><?= $fetch_listing['type'] ?></span></p>
               <p><i class="fas fa-tag"></i><span><?= $fetch_listing['offer'] ?></span></p>
-              <p><i class="fas fa-bed"></i><span><?= $fetch_listing['bhk'] ?></span></p>
+              <p><i class="fas fa-bed"></i><span><?= $fetch_listing['bhk'] ?> BHK</span></p>
               <p><i class="fas fa-trowel"></i><span><?= $fetch_listing['status'] ?></span></p>
               <p><i class="fas fa-couch"></i><span><?= $fetch_listing['furnished'] ?></span></p>
               <p><i class="fas fa-maximize"></i><span><?= $fetch_listing['carpet'] ?></span> sqft</p>

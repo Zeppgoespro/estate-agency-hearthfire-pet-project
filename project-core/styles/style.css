@@ -687,6 +687,85 @@ section {
 
 .filter-search form {
   background-color: var(--white);
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+}
+
+.filter-search form h3 {
+  text-align: center;
+  padding-bottom: 1rem;
+  font-size: 2.5rem;
+  color: var(--black);
+  text-transform: capitalize;
+}
+
+.filter-search form .flex {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.5rem;
+}
+
+.filter-search form .flex .box {
+  flex: 1 1 40rem;
+}
+
+.filter-search form .input {
+  width: 100%;
+  padding: 1.4rem;
+  color: var(--black);
+  font-size: 1.8rem;
+  border: var(--border);
+  margin: 1rem 0;
+}
+
+.filter-search form p {
+  padding-top: 1rem;
+  font-size: 1.6rem;
+  color: var(--light-color);
+}
+
+.filter-search form p span {
+  color: var(--main-color);
+}
+
+#close-filter {
+  text-align: right;
+  padding-bottom: 1rem;
+  display: none;
+}
+
+#close-filter i {
+  font-size: 2rem;
+  height: 4rem;
+  width: 4rem;
+  line-height: 4rem;
+  color: var(--white);
+  background-color: var(--main-color);
+  cursor: pointer;
+  text-align: center;
+}
+
+#close-filter i:hover {
+  background-color: var(--black);
+}
+
+#open-filter {
+  position: fixed;
+  bottom: 1rem; right: 1rem;
+  font-size: 2rem;
+  height: 4rem;
+  width: 4rem;
+  line-height: 4rem;
+  color: var(--white);
+  background-color: var(--main-color);
+  cursor: pointer;
+  text-align: center;
+  display: none;
+  z-index: 1000;
+}
+
+#open-filter:hover {
+  background-color: var(--black);
 }
 
 /* media queries */
@@ -737,6 +816,32 @@ section {
     padding-left: 4rem;
     background-color: var(--black);
     color: var(--white);
+  }
+
+  #open-filter {
+    display: inline-block;
+  }
+
+  #close-filter {
+    display: block;
+  }
+
+  .filter-search {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    overflow-x: scroll;
+    z-index: 1100;
+    padding: 0;
+    background-color: var(--white);
+    display: none;
+  }
+
+  .filter-search.active {
+    display: block;
+  }
+
+  .filter-search form {
+    box-shadow: none;
   }
 
 }

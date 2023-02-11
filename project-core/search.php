@@ -40,6 +40,7 @@
     <section class="filter-search">
 
       <form action="" method="post">
+        <div id="close-filter"><i class="fa fa-times"></i></div>
         <h3>filter your search</h3>
         <div class="flex">
           <div class="box">
@@ -64,7 +65,7 @@
           </div>
           <div class="box">
             <p>how many BHK? <span>*</span></p>
-            <select name="BHK" class="input" required>
+            <select name="bhk" class="input" required>
               <option value="1">1 BHK</option>
               <option value="2">2 BHK</option>
               <option value="3">3 BHK</option>
@@ -138,6 +139,9 @@
   <!-- filter section ends -->
 
 
+  <div id="open-filter" class="fas fa-filter" title="Open filter"></div>
+
+
   <?php
 
     if (isset($_POST['h_search'])):
@@ -149,6 +153,20 @@
       $h_max = $_POST['h_max'];
 
       $select_listings = $conn->prepare("SELECT * FROM `properties` WHERE address LIKE '%{$h_location}%' AND type LIKE '%{$h_type}%' AND offer LIKE '%{$h_offer}%' AND price BETWEEN $h_min AND $h_max ORDER BY date DESC");
+      $select_listings->execute();
+
+    elseif (isset($_POST['filter_search'])):
+
+      $location = $_POST['location'];
+      $type = $_POST['type'];
+      $offer = $_POST['offer'];
+      $bhk = $_POST['bhk'];
+      $min = $_POST['min'];
+      $max = $_POST['max'];
+      $status = $_POST['status'];
+      $furniture = $_POST['furniture'];
+
+      $select_listings = $conn->prepare("SELECT * FROM `properties` WHERE address LIKE '%{$location}%' AND type LIKE '%{$type}%' AND offer LIKE '%{$offer}%' AND status LIKE '%{$status}%' AND furnished LIKE '%{$furniture}%' AND bhk LIKE '%{$bhk}%' AND price BETWEEN $min AND $max ORDER BY date DESC");
       $select_listings->execute();
 
     else:
@@ -165,7 +183,21 @@
 
     <section class="listings">
 
-      <h1 class="heading">search result</h1>
+      <?php
+
+        switch (isset($_POST['h_search']) || isset($_POST['filter_search'])):
+
+          case true:
+            echo '<h1 class="heading">search result</h1>';
+          break;
+
+          case false:
+            echo '<h1 class="heading">latest properties</h1>';
+          break;
+
+        endswitch;
+
+      ?>
 
       <div class="box-container">
 
@@ -236,7 +268,7 @@
             <div class="flex">
               <p><i class="fas fa-house"></i><span><?= $fetch_listing['type'] ?></span></p>
               <p><i class="fas fa-tag"></i><span><?= $fetch_listing['offer'] ?></span></p>
-              <p><i class="fas fa-bed"></i><span><?= $fetch_listing['bhk'] ?></span></p>
+              <p><i class="fas fa-bed"></i><span><?= $fetch_listing['bhk'] ?> BHK</span></p>
               <p><i class="fas fa-trowel"></i><span><?= $fetch_listing['status'] ?></span></p>
               <p><i class="fas fa-couch"></i><span><?= $fetch_listing['furnished'] ?></span></p>
               <p><i class="fas fa-maximize"></i><span><?= $fetch_listing['carpet'] ?></span> sqft</p>
