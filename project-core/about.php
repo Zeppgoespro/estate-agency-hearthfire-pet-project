@@ -86,6 +86,122 @@
   <!-- steps section ends -->
 
 
+  <!-- reviews section starts -->
+
+    <section class="reviews">
+
+      <h1 class="heading">client's reviews</h1>
+
+      <div class="box-container">
+
+        <div class="box">
+          <div class="user">
+            <img src="./images/1-img.png" alt="User photo">
+            <div>
+              <h3>Jimmy Page</h3>
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis natus ducimus blanditiis. Culpa quod omnis ea quos deleniti! Minus, illum!</p>
+        </div>
+
+        <div class="box">
+          <div class="user">
+            <img src="./images/2-img.png" alt="User photo">
+            <div>
+              <h3>Winston Churchill</h3>
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis natus ducimus blanditiis. Culpa quod omnis ea quos deleniti! Minus, illum!</p>
+        </div>
+
+        <div class="box">
+          <div class="user">
+            <img src="./images/3-img.png" alt="User photo">
+            <div>
+              <h3>Conan the Barbarian</h3>
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis natus ducimus blanditiis. Culpa quod omnis ea quos deleniti! Minus, illum!</p>
+        </div>
+
+        <div class="box">
+          <div class="user">
+            <img src="./images/4-img.png" alt="User photo">
+            <div>
+              <h3>Jackie Chan</h3>
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis natus ducimus blanditiis. Culpa quod omnis ea quos deleniti! Minus, illum!</p>
+        </div>
+
+        <div class="box">
+          <div class="user">
+            <img src="./images/5-img.png" alt="User photo">
+            <div>
+              <h3>Charles the Great</h3>
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis natus ducimus blanditiis. Culpa quod omnis ea quos deleniti! Minus, illum!</p>
+        </div>
+
+        <div class="box">
+          <div class="user">
+            <img src="./images/6-img.png" alt="User photo">
+            <div>
+              <h3>Peter Griffin</h3>
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis natus ducimus blanditiis. Culpa quod omnis ea quos deleniti! Minus, illum!</p>
+        </div>
+
+      </div>
+
+    </section>
+
+  <!-- reviews section ends -->
+
+
   <!-- footer section starts -->
 
   <?php include './components/footer.php' ?>
