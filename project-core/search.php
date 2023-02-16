@@ -310,5 +310,19 @@
 
   <?php include './components/messages.php' ?>
 
+  <script>
+
+    let filter = document.querySelector('.filter-search');
+
+    document.querySelector('#open-filter').onclick = () => {
+      filter.classList.add('active');
+    }
+
+    document.querySelector('#close-filter').onclick = () => {
+      filter.classList.remove('active');
+    }
+
+  </script>
+
 </body>
 </html>

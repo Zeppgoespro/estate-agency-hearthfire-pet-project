@@ -20,12 +20,8 @@ document.querySelectorAll('input[type="number"]').forEach(inputNumber => {
   }
 });
 
-let filter = document.querySelector('.filter-search');
-
-document.querySelector('#open-filter').onclick = () => {
-  filter.classList.add('active');
-}
-
-document.querySelector('#close-filter').onclick = () => {
-  filter.classList.remove('active');
-}
+document.querySelectorAll('.faq .box-container .box h3').forEach(heading => {
+  heading.onclick = () => {
+    heading.parentElement.classList.toggle('active');
+  }
+});

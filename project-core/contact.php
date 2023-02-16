@@ -89,8 +89,34 @@
 
       <div class="box-container">
 
+        <div class="box active">
+          <h3><span>how to cancel booking?</span><i class="fas fa-angle-down"></i></h3>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque maiores veritatis harum quia dolorem officiis rem illum vel omnis ad fugit, repellendus ipsum, neque quibusdam excepturi? Sunt quia vero iure?</p>
+        </div>
+
+        <div class="box active">
+          <h3><span>when will i get the possession?</span><i class="fas fa-angle-down"></i></h3>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque maiores veritatis harum quia dolorem officiis rem illum vel omnis ad fugit, repellendus ipsum, neque quibusdam excepturi? Sunt quia vero iure?</p>
+        </div>
+
         <div class="box">
-          <h3><span>how to...</span><i class="fas fa-angle-down"></i></h3>
+          <h3><span>where can i pay the rent?</span><i class="fas fa-angle-down"></i></h3>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque maiores veritatis harum quia dolorem officiis rem illum vel omnis ad fugit, repellendus ipsum, neque quibusdam excepturi? Sunt quia vero iure?</p>
+        </div>
+
+        <div class="box">
+          <h3><span>how to contact with the buyers?</span><i class="fas fa-angle-down"></i></h3>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque maiores veritatis harum quia dolorem officiis rem illum vel omnis ad fugit, repellendus ipsum, neque quibusdam excepturi? Sunt quia vero iure?</p>
+        </div>
+
+        <div class="box">
+          <h3><span>why my listing not showing up?</span><i class="fas fa-angle-down"></i></h3>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque maiores veritatis harum quia dolorem officiis rem illum vel omnis ad fugit, repellendus ipsum, neque quibusdam excepturi? Sunt quia vero iure?</p>
+        </div>
+
+        <div class="box">
+          <h3><span>how to promote my listing?</span><i class="fas fa-angle-down"></i></h3>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque maiores veritatis harum quia dolorem officiis rem illum vel omnis ad fugit, repellendus ipsum, neque quibusdam excepturi? Sunt quia vero iure?</p>
         </div>
 
       </div>
