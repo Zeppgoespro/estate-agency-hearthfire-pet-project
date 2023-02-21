@@ -50,6 +50,8 @@
 
     <section class="view-property">
 
+      <h1>property details</h1>
+
       <?php
 
         $select_property = $conn->prepare("SELECT * FROM `properties` WHERE id = ? LIMIT 1");
@@ -145,45 +147,44 @@
             <p><i>furniture:</i><span><?= $fetch_property['furnished'] ?></span></p>
             <p><i>loan:</i><span><?= $fetch_property['loan'] ?></span></p>
           </div>
+        </div>
 
-          <h3 class="title">amenities</h3>
-          <div class="flex">
+        <h3 class="title">amenities</h3>
+        <div class="flex">
 
-            <div class="box">
-              <p><i class="fas fa-<?php if($fetch_property['lift'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>lift</span></p>
-              <p><i class="fas fa-<?php if($fetch_property['security_guard'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>security guard</span></p>
-              <p><i class="fas fa-<?php if($fetch_property['play_ground'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>play ground</span></p>
-              <p><i class="fas fa-<?php if($fetch_property['garden'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>garden</span></p>
-              <p><i class="fas fa-<?php if($fetch_property['water_supply'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>water supply</span></p>
-              <p><i class="fas fa-<?php if($fetch_property['power_backup'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>power backup</span></p>
-            </div>
-            <div class="box">
-              <p><i class="fas fa-<?php if($fetch_property['parking_area'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>parking area</span></p>
-              <p><i class="fas fa-<?php if($fetch_property['gym'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>gym</span></p>
-              <p><i class="fas fa-<?php if($fetch_property['shopping_mall'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>shopping mall</span></p>
-              <p><i class="fas fa-<?php if($fetch_property['hospital'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>hospital</span></p>
-              <p><i class="fas fa-<?php if($fetch_property['school'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>school</span></p>
-              <p><i class="fas fa-<?php if($fetch_property['market_area'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>market area</span></p>
-            </div>
-
+          <div class="box">
+            <p><i class="fas fa-<?php if($fetch_property['lift'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>lift</span></p>
+            <p><i class="fas fa-<?php if($fetch_property['security_guard'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>security guard</span></p>
+            <p><i class="fas fa-<?php if($fetch_property['play_ground'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>play ground</span></p>
+            <p><i class="fas fa-<?php if($fetch_property['garden'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>garden</span></p>
+            <p><i class="fas fa-<?php if($fetch_property['water_supply'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>water supply</span></p>
+            <p><i class="fas fa-<?php if($fetch_property['power_backup'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>power backup</span></p>
+          </div>
+          <div class="box">
+            <p><i class="fas fa-<?php if($fetch_property['parking_area'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>parking area</span></p>
+            <p><i class="fas fa-<?php if($fetch_property['gym'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>gym</span></p>
+            <p><i class="fas fa-<?php if($fetch_property['shopping_mall'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>shopping mall</span></p>
+            <p><i class="fas fa-<?php if($fetch_property['hospital'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>hospital</span></p>
+            <p><i class="fas fa-<?php if($fetch_property['school'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>school</span></p>
+            <p><i class="fas fa-<?php if($fetch_property['market_area'] == 'yes'){echo 'check';}else{echo 'times';} ?>"></i><span>market area</span></p>
           </div>
 
-          <h3 class="title">description</h3>
-          <p class="description"><?= $fetch_property['description'] ?></p>
-
-          <form action="" method="post" class="flex-btn">
-
-            <input type="hidden" name="property_id" value="<?= $property_id ?>">
-            <?php if ($select_saved->rowCount() > 0): ?>
-              <button type="submit" name="save" class="save"><i class="fas fa-heart"></i><span>saved</span></button>
-            <?php else: ?>
-              <button type="submit" name="save" class="save"><i class="far fa-heart"></i><span>save</span></button>
-            <?php endif; ?>
-            <input type="submit" value="send request" name="send" class="btn">
-
-          </form>
-
         </div>
+
+        <h3 class="title">description</h3>
+        <p class="description"><?= $fetch_property['description'] ?></p>
+
+        <form action="" method="post" class="flex-btn">
+
+          <input type="hidden" name="property_id" value="<?= $property_id ?>">
+          <?php if ($select_saved->rowCount() > 0): ?>
+            <button type="submit" name="save" class="save"><i class="fas fa-heart"></i><span>saved</span></button>
+          <?php else: ?>
+            <button type="submit" name="save" class="save"><i class="far fa-heart"></i><span>save</span></button>
+          <?php endif; ?>
+          <input type="submit" value="send request" name="send" class="btn">
+
+        </form>
 
       </div>
 

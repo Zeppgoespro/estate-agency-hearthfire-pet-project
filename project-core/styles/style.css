@@ -1089,6 +1089,8 @@ section {
   font-size: 2rem;
   color: var(--black);
   margin-bottom: .5rem;
+  padding-top: 1.5rem;
+  text-transform: capitalize;
 }
 
 .view-property .details .address {
@@ -1108,7 +1110,8 @@ section {
   gap: 2rem;
   background-color: var(--light-bg);
   padding: 1.5rem 2rem;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-items: center;
   margin: 1.5rem 0;
 }
 
@@ -1145,6 +1148,48 @@ section {
   justify-content: space-between;
   flex-wrap: wrap;
   column-gap: 1.5rem;
+  margin: 1rem 0;
+}
+
+.view-property .details .flex .box {
+  flex: 1 1 40rem;
+}
+
+.view-property .details .flex .box p {
+  padding: .5rem 0;
+  font-size: 1.7rem;
+  color: var(--light-color);
+}
+
+.view-property .details .flex .box p i {
+  margin-right: 1rem;
+  color: var(--main-color);
+}
+
+.view-property .details .description {
+  line-height: 1.5;
+  font-size: 1.7rem;
+  color: var(--light-color);
+  padding: 1rem 0;
+}
+
+.view-property .details .flex-btn .save {
+  width: 100%;
+  padding: 1rem 3rem;
+  font-size: 1.8rem;
+  color: var(--light-color);
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.view-property .details .flex-btn .save i {
+  margin-right: 1rem;
+  color: var(--main-color);
+}
+
+.view-property .details .flex-btn .save:hover {
+  background-color: var(--black);
+  color: var(--white);
 }
 
 /* media queries */
@@ -1254,6 +1299,12 @@ section {
   .dashboard .box-container,
   .requests .box-container {
     grid-template-columns: 1fr;
+  }
+
+  .view-property .details .images-container img {
+    height: 25rem;
+    width: 35rem;
+    object-fit: contain;
   }
 
 }
