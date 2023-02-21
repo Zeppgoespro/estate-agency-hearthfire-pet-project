@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&display=swap');
+
+:root {
+  --main-color: #2980b9;
+  --orange: #f39c12;
+  --red: #eb2f06;
+  --light-color: #666;
+  --light-bg: #eee;
+  --white: #fff;
+  --black: #333;
+  --box-shadow: 0 .5rem 1rem rgba(0,0,0,0.1);
+  --border: .2rem solid rgba(0,0,0,.3);
+}
+
+* {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+  outline: none; border: none;
+  text-decoration: none;
+}
+
+*::selection {
+  background-color: var(--main-color);
+  color: var(--white);
+}
+
+*::-webkit-scrollbar {
+  height: .5rem;
+  width: 1rem;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--main-color);
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background-color: var(--light-bg);
+  padding-left: 30rem;
+}
+
+section {
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* buttons */
+
+.btn,
+.delete-btn,
+.option-btn,
+.inline-btn,
+.inline-option-btn,
+.inline-delete-btn {
+  padding: 1rem 2rem;
+  margin-top: .8rem;
+  cursor: pointer;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 1.8rem;
+  color: var(--white);
+  border: var(--border);
+  border-radius: .5rem;
+}
+
+.btn:hover,
+.delete-btn:hover,
+.option-btn:hover,
+.inline-btn:hover,
+.inline-option-btn:hover,
+.inline-delete-btn:hover {
+  background-color: var(--black);
+}
+
+.btn,
+.delete-btn,
+.option-btn {
+  display: block;
+}
+
+.inline-btn,
+.inline-delete-btn,
+.inline-option-btn {
+  display: inline-block;
+}
+
+.btn,
+.inline-btn {
+  background-color: var(--main-color);
+}
+
+.option-btn,
+.inline-option-btn {
+  background-color: var(--orange);
+}
+
+.delete-btn,
+.inline-delete-btn {
+  background-color: var(--red);
+}
+
+.flex-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* * * */
+
+/* Header section */
+
+.header {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  min-height: 100vh;
+  background-color: var(--white);
+  border-right: var(--border);
+  padding: 2rem;
+  z-index: 1000;
+  width: 30rem;
+}
+
+.header #close-header {
+  text-align: right;
+  padding-bottom: 1.5rem;
+}
+
+.header #close-header i {
+  height: 4rem;
+  width: 4.2rem;
+  line-height: 4rem;
+  font-size: 2rem;
+  background-color: var(--red);
+  cursor: pointer;
+  color: var(--white);
+  text-align-last: center;
+  border-radius: .5rem;
+}
+
+.header #close-header i:hover {
+  background-color: var(--black);
+}
+
+.header .logo {
+  text-align: center;
+  display: block;
+  padding-bottom: 1rem;
+  font-size: 2.5rem;
+  color: var(--black);
+  font-weight: 700;
+}
+
+.header .logo:hover {
+  color: var(--main-color);
+  text-decoration: underline;
+}
+
+.header .navbar a {
+  display: block;
+  background-color: var(--light-bg);
+  border: var(--border);
+  padding: 1.3rem;
+  border-radius: .5rem;
+  font-size: 1.8rem;
+  color: var(--light-color);
+  margin: .3rem 0;
+}
+
+.header .navbar a i {
+  color: var(--black);
+  margin-right: 1rem;
+}
+
+.header .navbar a:hover {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+.header .navbar a:hover i {
+  color: var(--white);
+}

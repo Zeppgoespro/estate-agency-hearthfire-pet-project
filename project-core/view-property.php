@@ -50,7 +50,7 @@
 
     <section class="view-property">
 
-      <h1>property details</h1>
+      <h1 class="heading">property details</h1>
 
       <?php
 
