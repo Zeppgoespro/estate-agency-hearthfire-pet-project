@@ -96,6 +96,7 @@ section {
 .delete-btn,
 .option-btn {
   display: block;
+  width: 100%;
 }
 
 .inline-btn,
@@ -259,6 +260,53 @@ section {
   border-radius: .5rem;
   overflow-x: hidden;
   text-overflow: ellipsis;
+}
+
+/* login section */
+
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.form-container form {
+  width: 50rem;
+  border-radius: .5rem;
+  background-color: var(--white);
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  border: var(--border);
+  text-align: center;
+}
+
+.form-container form h3 {
+  font-size: 2.5rem;
+  padding-bottom: 1rem;
+  color: var(--black);
+  text-transform: capitalize;
+}
+
+.form-container form p {
+  padding: 1rem 0;
+  font-size: 1.8rem;
+  color: var(--light-color);
+}
+
+.form-container form p span {
+  color: var(--red);
+}
+
+.form-container form .box {
+  width: 100%;
+  border-radius: .5rem;
+  border: var(--border);
+  background-color: var(--light-bg);
+  padding: 1.4rem;
+  color: var(--black);
+  font-size: 1.8rem;
+  margin: 1rem 0;
 }
 
 /* media queries */
