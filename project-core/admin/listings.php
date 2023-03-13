@@ -6,8 +6,8 @@
     $admin_id = $_COOKIE['admin_id'];
   else:
     $admin_id = '';
-    #header('location: ../login.php');
-    #return;
+    header('location: ../login.php');
+    return;
   endif;
 
 ?>
@@ -34,6 +34,40 @@
   <?php include '../components/admin-header.php' ?>
 
   <!-- header section ends -->
+
+
+  <!-- listings section starts -->
+
+    <section class="listings">
+
+      <h1 class="heading"> properties listed</h1>
+
+      <form action="" method="post">
+
+        <input type="text" name="search_box" placeholder="search listings" maxlength="100">
+        <button type="submit" name="search_btn" class="fas fa-search"></button>
+
+      </form>
+
+      <div class="box-container">
+
+        <?php
+
+          if (isset($_POST['search_box']) || isset($_POST['search_btn'])):
+
+            $search_box = $_POST['search_box'];
+            $select_listings = $conn->prepare("SELECT * FROM `properties` WHERE name LIKE '%{$search_box}%' OR WHERE address LIKE '%{$search_box}%' ORDER BY date DESC");
+            $select_listings->execute();
+
+          endif;
+
+        ?>
+
+      </div>
+
+    </section>
+
+  <!-- listings section ends -->
 
 
   <!-- sweetalert cdn link -->

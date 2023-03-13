@@ -5,13 +5,19 @@
   if (isset($_POST['submit'])):
 
     $name = $_POST['name'];
-    $pass = $_POST['pass'];
+    $pass = sha1($_POST['pass']);
 
     $verify_admin = $conn->prepare("SELECT * FROM `admins` WHERE name = ? AND password = ? LIMIT 1");
     $verify_admin->execute([$name, $pass]);
     $row = $verify_admin->fetch(PDO::FETCH_ASSOC);
 
-
+    if ($verify_admin->rowCount() > 0):
+      setcookie('admin_id', $row['id'], time() + 60*60*24*30, '/');
+      header('location: ./dashboard.php');
+      return;
+    else:
+      $warning_msg[] = 'incorrect name or password';
+    endif;
 
   endif;
 
@@ -48,11 +54,13 @@
     <form action="" method="post">
 
       <h3>welcome back</h3>
-      <p>default password = <span>999</span> | | default name = <span>admin</span></p>
+      <p>def name = <span>megaforce</span> || def password = <span>pushkin</span></p>
 
-      <input type="text" class="box" name="name" required placeholder="enter your name" maxlength="20" oninput="this.value.replace(/\s/g, '')">
-      <input type="password" class="box" name="pass" required placeholder="enter your password" maxlength="20" oninput="this.value.replace(/\s/g, '')">
+      <input type="text" class="box" name="name" required placeholder="enter your name" maxlength="20" oninput="this.value = this.value.replace(/\s/g, '')">
+      <input type="password" class="box" name="pass" required placeholder="enter your password" maxlength="20" oninput="this.value = this.value.replace(/\s/g, '')">
+
       <input type="submit" value="login" name="submit" class="btn">
+
     </form>
 
   </section>

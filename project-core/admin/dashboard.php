@@ -6,8 +6,8 @@
     $admin_id = $_COOKIE['admin_id'];
   else:
     $admin_id = '';
-    #header('location: ../login.php');
-    #return;
+    header('location: ../admin/login.php');
+    return;
   endif;
 
 ?>
