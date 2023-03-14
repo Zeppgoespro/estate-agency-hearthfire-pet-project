@@ -262,7 +262,7 @@ section {
   text-overflow: ellipsis;
 }
 
-/* login section */
+/* login + register + update section */
 
 .form-container {
   display: flex;
@@ -307,6 +307,77 @@ section {
   color: var(--black);
   font-size: 1.8rem;
   margin: 1rem 0;
+}
+
+/* listings section */
+
+.search-form {
+  max-width: 50rem;
+  box-shadow: var(--box-shadow);
+  border-radius: .5rem;
+  padding: 1.5rem 1.8rem;
+  border: var(--border);
+  background-color: var(--white);
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+.search-form input {
+  width: 100%;
+  font-size: 1.8rem;
+  color: var(--black);
+}
+
+.search-form button {
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--black);
+  background: none;
+}
+
+.search-form button:hover {
+  color: var(--main-color);
+}
+
+.listings .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 35rem);
+  gap: 1.5rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.listings .box-container .box {
+  box-shadow: var(--box-shadow);
+  border-radius: .5rem;
+  padding: 2rem;
+  border: var(--border);
+  background-color: var(--white);
+}
+
+.listings .box-container .box .thumb {
+  position: relative;
+  height: 20rem;
+}
+
+.listings .box-container .box .thumb img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: .5rem;
+}
+
+.listings .box-container .box .thumb p {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  background-color: rgba(0,0,0,.3);
+  color: var(--white);
+  padding: .5rem 1rem;
+  font-size: 1.8rem;
+  border-radius: .5rem;
 }
 
 /* media queries */
@@ -357,6 +428,10 @@ section {
   }
 
   .dashboard .box-container {
+    grid-template-columns: 1fr;
+  }
+
+  .listings .box-container {
     grid-template-columns: 1fr;
   }
 
