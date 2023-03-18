@@ -10,6 +10,58 @@
     return;
   endif;
 
+  if (isset($_POST['delete'])):
+
+    $delete_id = $_POST['delete_id'];
+
+    $verify_delete = $conn->prepare("SELECT * FROM `properties` WHERE id = ? LIMIT 1");
+    $verify_delete->execute([$delete_id]);
+
+    if ($verify_delete->rowCount() > 0):
+
+      $fetch_images = $verify_delete->fetch(PDO::FETCH_ASSOC);
+
+      $delete_image_1 = $fetch_images['image_1'];
+      $delete_image_2 = $fetch_images['image_2'];
+      $delete_image_3 = $fetch_images['image_3'];
+      $delete_image_4 = $fetch_images['image_4'];
+      $delete_image_5 = $fetch_images['image_5'];
+
+      unlink('../uploaded-files/'.$delete_image_1);
+
+      if (!empty($delete_image_2)):
+        unlink('../uploaded-files/'.$delete_image_2);
+      endif;
+
+      if (!empty($delete_image_3)):
+        unlink('../uploaded-files/'.$delete_image_3);
+      endif;
+
+      if (!empty($delete_image_4)):
+        unlink('../uploaded-files/'.$delete_image_4);
+      endif;
+
+      if (!empty($delete_image_5)):
+        unlink('../uploaded-files/'.$delete_image_5);
+      endif;
+
+      $delete_saved = $conn->prepare("DELETE FROM `saved` WHERE property_id = ?");
+      $delete_saved->execute([$delete_id]);
+
+      $delete_requests = $conn->prepare("DELETE FROM `requests` WHERE property_id = ?");
+      $delete_requests->execute([$delete_id]);
+
+      $delete_listings = $conn->prepare("DELETE FROM `properties` WHERE id = ?");
+      $delete_listings->execute([$delete_id]);
+
+      $success_msg[] = 'property deleted';
+
+    else:
+      $warning_msg[] = 'property already deleted';
+    endif;
+
+  endif;
+
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +108,7 @@
           if (isset($_POST['search_box']) || isset($_POST['search_btn'])):
 
             $search_box = $_POST['search_box'];
-            $select_listings = $conn->prepare("SELECT * FROM `properties` WHERE name LIKE '%{$search_box}%' OR WHERE address LIKE '%{$search_box}%' ORDER BY date DESC");
+            $select_listings = $conn->prepare("SELECT * FROM `properties` WHERE property_name LIKE '%{$search_box}%' OR address LIKE '%{$search_box}%' ORDER BY date DESC");
             $select_listings->execute();
 
           else:
@@ -114,7 +166,7 @@
           </div>
 
           <p class="price"><i class="fa-solid fa-dollar-sign"></i><span><?= $fetch_property['price'] ?></span></p>
-          <h3><?= $fetch_property['property_name'] ?></h3>
+          <h3 class="name"><?= $fetch_property['property_name'] ?></h3>
           <p class="address"><i class="fas fa-map-marker-alt"></i><span><?= $fetch_property['address'] ?></span></p>
 
           <form action="" method="post" class="flex-btn">
