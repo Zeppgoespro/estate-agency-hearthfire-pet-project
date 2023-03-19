@@ -540,6 +540,44 @@ section {
   padding: 1rem 0;
 }
 
+/* users section */
+
+.grid .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 35rem);
+  gap: 1.5rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.grid .box-container .box {
+  border-radius: .5rem;
+  border: var(--border);
+  background-color: var(--white);
+  padding: 2rem;
+  padding-top: 1rem;
+  overflow-x: hidden;
+  box-shadow: var(--box-shadow);
+}
+
+.grid .box-container .box p {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  font-size: 1.8rem;
+  color: var(--light-color);
+  padding: .5rem 0;
+}
+
+.grid .box-container .box p a,
+.grid .box-container .box p span {
+  color: var(--main-color);
+}
+
+.grid .box-container .box p a:hover {
+  text-decoration: underline;
+  color: var(--red);
+}
+
 
 /* media queries */
 
@@ -593,6 +631,10 @@ section {
   }
 
   .listings .box-container {
+    grid-template-columns: 1fr;
+  }
+
+  .grid .box-container {
     grid-template-columns: 1fr;
   }
 
