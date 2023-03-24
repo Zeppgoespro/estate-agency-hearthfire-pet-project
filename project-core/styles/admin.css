@@ -551,6 +551,7 @@ section {
 }
 
 .grid .box-container .box {
+  height: 100%; /***/
   border-radius: .5rem;
   border: var(--border);
   background-color: var(--white);

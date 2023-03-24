@@ -10,9 +10,21 @@
     return;
   endif;
 
-  if (isset($_POST['delete'])):
+  if (isset($_POST['delete_id'])):
 
-    $delete_id = $_POST['delete'];
+    $delete_id = $_POST['delete_id'];
+
+    $verify_delete = $conn->prepare("SELECT * FROM `messages` WHERE id = ?");
+    $verify_delete->execute([$delete_id]);
+
+    if ($verify_delete->rowCount() > 0):
+      $delete_message = $conn->prepare("DELETE FROM `messages` WHERE id = ?");
+      $delete_message->execute([$delete_id]);
+
+      $success_msg[] = 'message deleted';
+    else:
+      $warning_msg[] = 'message already deleted';
+    endif;
 
   endif;
 
