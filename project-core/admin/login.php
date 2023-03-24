@@ -54,7 +54,7 @@
     <form action="" method="post">
 
       <h3>welcome back</h3>
-      <p>def name = <span>megaforce</span> || def password = <span>pushkin</span></p>
+      <p>def name = <span>vader</span> || def password = <span>pushkin</span></p>
 
       <input type="text" class="box" name="name" required placeholder="enter your name" maxlength="20" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" class="box" name="pass" required placeholder="enter your password" maxlength="20" oninput="this.value = this.value.replace(/\s/g, '')">
