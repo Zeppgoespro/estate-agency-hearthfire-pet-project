@@ -10,6 +10,25 @@
     return;
   endif;
 
+  if (isset($_POST['delete'])):
+
+    $delete_id = $_POST['delete_id'];
+
+    $verify_delete = $conn->prepare("SELECT * FROM `admins` WHERE id = ? LIMIT 1");
+    $verify_delete->execute([$delete_id]);
+
+    if ($verify_delete->rowCount() > 0):
+
+      $delete_admin = $conn->prepare("DELETE FROM `admins` WHERE id = ?");
+      $delete_admin->execute([$delete_id]);
+      $success_msg[] = 'admin deleted';
+
+    else:
+      $warning_msg[] = 'admin deleted already';
+    endif;
+
+  endif;
+
 ?>
 
 <!DOCTYPE html>
@@ -71,11 +90,35 @@
 
           while ($fetch_admins = $select_admins->fetch(PDO::FETCH_ASSOC)):
 
+            if ($fetch_admins['id'] == $admin_id):
+
       ?>
 
-
+      <div class="box" style="order: -1;">
+        <p>name: <span><?= $fetch_admins['name'] ?></span></p>
+        <div class="flex-btn">
+          <a href="./update.php" class="btn">update</a>
+          <a href="./register.php" class="option-btn">register</a>
+        </div>
+      </div>
 
       <?php
+
+            else:
+
+      ?>
+
+      <div class="box">
+        <p>name: <span><?= $fetch_admins['name'] ?></span></p>
+        <form action="" method="post">
+          <input type="hidden" name="delete_id" value="<?= $fetch_admins['id'] ?>">
+          <input type="submit" value="delete admin" name="delete" class="delete-btn" onclick="return confirm('delete this admin?');">
+        </form>
+      </div>
+
+      <?php
+
+            endif;
 
           endwhile;
 

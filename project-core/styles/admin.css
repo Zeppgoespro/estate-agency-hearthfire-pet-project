@@ -540,7 +540,7 @@ section {
   padding: 1rem 0;
 }
 
-/* users section */
+/* users and messages section */
 
 .grid .box-container {
   display: grid;
@@ -566,6 +566,7 @@ section {
   font-size: 1.8rem;
   color: var(--light-color);
   padding: .5rem 0;
+  white-space: pre-line;
 }
 
 .grid .box-container .box p a,
