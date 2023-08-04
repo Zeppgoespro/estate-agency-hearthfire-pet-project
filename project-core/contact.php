@@ -1,6 +1,7 @@
 <?php
 
   include './components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['user_id'])):
     $user_id = $_COOKIE['user_id'];
@@ -21,14 +22,28 @@
     $verify_message->execute([$name, $email, $number, $message]);
 
     if ($verify_message->rowCount() > 0):
-      $warning_msg[] = 'message sent already';
+      $_SESSION['wrnng_msg'] = 'message sent already';
+      header('location: contact.php#search-form');
+      exit;
     else:
       $insert_message = $conn->prepare("INSERT INTO `messages` (id, name, email, number, message) VALUES (?,?,?,?,?)");
       $insert_message->execute([$message_id, $name, $email, $number, $message]);
-      $success_msg[] = 'message sent successfully';
+      $_SESSION['scss_msg'] = 'message sent successfully!';
+      header('location: contact.php#contact-form');
+      exit;
     endif;
 
   endif;
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+  }
 
 ?>
 
@@ -65,7 +80,7 @@
           <img src="./images/contact-img.svg">
         </div>
 
-        <form action="" method="post">
+        <form action="" method="post" id="contact-form">
           <h3>get in touch</h3>
           <input type="text" name="name" placeholder="enter your name" required maxlength="50" class="box">
           <input type="text" name="email" placeholder="enter your email" required maxlength="50" class="box">

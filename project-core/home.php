@@ -1,6 +1,7 @@
 <?php
 
   include './components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['user_id'])):
     $user_id = $_COOKIE['user_id'];
@@ -8,6 +9,7 @@
     $user_id = '';
   endif;
 
+  $thisFilePath = str_replace('/var/www/', '', __FILE__ . '#listings');
   include './components/save-send.php';
 
 ?>
@@ -166,7 +168,7 @@
 
   <!-- listings section starts -->
 
-    <section class="listings">
+    <section class="listings" id="listings">
 
       <h1 class="heading">latest listings</h1>
 

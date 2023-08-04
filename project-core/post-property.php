@@ -7,6 +7,7 @@
   else:
     $user_id = '';
     header('location: ./login.php');
+    exit;
   endif;
 
   if (isset($_POST['post'])):
@@ -129,6 +130,16 @@
     }
 
   endif;
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+  }
 
 ?>
 

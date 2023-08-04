@@ -1,6 +1,7 @@
 <?php
 
   include './components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['user_id'])):
     $user_id = $_COOKIE['user_id'];
@@ -20,12 +21,25 @@
 
     if ($verify_user->rowCount() > 0):
       setcookie('user_id', $row['id'], time() + 60*60*24*30, '/');
+      $_SESSION['scss_msg'] = 'Logined successfully!';
       header('location: home.php');
-      return;
+      exit;
     else:
-      $warning_msg[] = 'Incorrect name, email or password';
+      $_SESSION['wrnng_msg'] = 'Incorrect name, email or password';
+      header('location: login.php');
+      exit;
     endif;
   endif;
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+  }
 
 ?>
 

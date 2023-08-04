@@ -1,6 +1,7 @@
 <?php
 
   include './components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['user_id'])):
     $user_id = $_COOKIE['user_id'];
@@ -8,6 +9,7 @@
     $user_id = '';
   endif;
 
+  $thisFilePath = str_replace('/var/www/', '', __FILE__);
   include './components/save-send.php';
 
 ?>

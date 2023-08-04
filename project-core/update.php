@@ -1,13 +1,14 @@
 <?php
 
   include './components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['user_id'])):
     $user_id = $_COOKIE['user_id'];
   else:
     $user_id = '';
     header('location: login.php');
-    return;
+    exit;
   endif;
 
   $select_account = $conn->prepare("SELECT * FROM `users` WHERE id = ? LIMIT 1");
@@ -15,34 +16,6 @@
   $fetch_account = $select_account->fetch(PDO::FETCH_ASSOC);
 
   if (isset($_POST['submit'])):
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $number = $_POST['number'];
-
-    if (!empty($name)):
-      $update_name = $conn->prepare("UPDATE `users` SET name = ? WHERE id = ?");
-      $update_name->execute([$name, $user_id]);
-      $success_msg[] = 'Name updated';
-    endif;
-
-    if (!empty($email)):
-      $verify_email = $conn->prepare("SELECT email FROM `users` WHERE email = ?");
-      $verify_email->execute([$email]);
-
-      if ($verify_email->rowCount() > 0):
-        $warning_msg[] = 'Email already taken';
-      else:
-        $update_email = $conn->prepare("UPDATE `users` SET email = ? WHERE id = ?");
-        $update_email->execute([$email, $user_id]);
-        $success_msg[] = 'Email updated';
-      endif;
-    endif;
-
-    if (!empty($number)):
-      $update_number = $conn->prepare("UPDATE `users` SET number = ? WHERE id = ?");
-      $update_number->execute([$number, $user_id]);
-      $success_msg[] = 'Number updated';
-    endif;
 
     $empty_pass = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
     $prev_pass = $fetch_account['password'];
@@ -52,21 +25,84 @@
 
     if ($empty_pass != $old_pass):
       if ($old_pass != $prev_pass):
-        $warning_msg[] = 'Old password not matched';
+        $_SESSION['wrnng_msg'] = 'Old password not matched';
+        header('location: update.php');
+        exit;
+      elseif ($new_pass != $empty_pass && $con_pass == $empty_pass):
+        $_SESSION['wrnng_msg'] = 'Confirmed password required';
+        header('location: update.php');
+        exit;
       elseif ($con_pass != $new_pass):
-        $warning_msg[] = 'Confirm password not matched';
+        $_SESSION['wrnng_msg'] = 'Confirmed password not matched';
+        header('location: update.php');
+        exit;
       else:
         if ($new_pass != $empty_pass):
           $update_pass = $conn->prepare("UPDATE `users` SET password = ? WHERE id = ?");
           $update_pass->execute([$con_pass, $user_id]);
-          $succes_msg[] = 'Password updated';
+          // $_SESSION['scss_msg'] = 'Password updated';
+          // header('location: update.php');
+          // exit;
         else:
-          $warning_msg[] = 'Please enter new password';
+          $_SESSION['wrnng_msg'] = 'Nothing changed';
+          header('location: update.php');
+          exit;
         endif;
       endif;
     endif;
 
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $number = $_POST['number'];
+
+    if (!empty($email)):
+      $verify_email = $conn->prepare("SELECT email FROM `users` WHERE email = ?");
+      $verify_email->execute([$email]);
+
+      if ($verify_email->rowCount() > 0):
+        $_SESSION['wrnng_msg'] = 'Email already taken';
+        header('location: update.php');
+        exit;
+      else:
+        $update_email = $conn->prepare("UPDATE `users` SET email = ? WHERE id = ?");
+        $update_email->execute([$email, $user_id]);
+        // $_SESSION['scss_msg'] = 'Email updated';
+        // header('location: update.php');
+        // exit;
+      endif;
+    endif;
+
+    if (!empty($number)):
+      $update_number = $conn->prepare("UPDATE `users` SET number = ? WHERE id = ?");
+      $update_number->execute([$number, $user_id]);
+      // $_SESSION['scss_msg'] = 'Number updated';
+      // header('location: update.php');
+      // exit;
+    endif;
+
+    if (!empty($name)):
+      $update_name = $conn->prepare("UPDATE `users` SET name = ? WHERE id = ?");
+      $update_name->execute([$name, $user_id]);
+      // $_SESSION['scss_msg'] = 'Name updated';
+      // header('location: update.php');
+      // exit;
+    endif;
+
+    $_SESSION['scss_msg'] = 'Profile updated!';
+    header('location: update.php');
+    exit;
+
   endif;
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+  }
 
 ?>
 
@@ -102,7 +138,7 @@
       <input type="text" name="name" maxlength="50" placeholder="<?= htmlentities($fetch_account['name']) ?>" class="box">
       <input type="email" name="email" maxlength="50" placeholder="<?= htmlentities($fetch_account['email']) ?>" class="box">
       <input type="number" name="number" placeholder="<?= htmlentities($fetch_account['number']) ?>" min="0" max="999999999999" maxlength="12" class="box">
-      <input type="password" name="old_pass" maxlength="50" placeholder="enter your old password" class="box">
+      <input type="password" name="old_pass" required maxlength="50" placeholder="enter your old password" class="box">
       <input type="password" name="new_pass" maxlength="50" placeholder="enter your new password" class="box">
       <input type="password" name="con_pass" maxlength="50" placeholder="confirm your new password" class="box">
       <input type="submit" value="update" name="submit" class="btn">

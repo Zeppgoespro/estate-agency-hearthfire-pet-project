@@ -1,6 +1,7 @@
 <?php
 
   include './components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['user_id'])):
     $user_id = $_COOKIE['user_id'];
@@ -21,10 +22,14 @@
     $select_email->execute([$email]);
 
     if ($select_email->rowCount() > 0):
-      $warning_msg[] = 'Email already taken';
+      $_SESSION['wrnng_msg'] = 'Email already taken';
+      header('location: register.php');
+      exit;
     else:
       if ($pass != $con_pass):
-        $warning_msg[] = 'Password not matched';
+        $_SESSION['wrnng_msg'] = 'Password not matched';
+        header('location: register.php');
+        exit;
       else:
         $insert_user = $conn->prepare("INSERT INTO `users` (id, name, number, email, password) VALUES (?,?,?,?,?)");
         $insert_user->execute([$id, $name, $number, $email, $con_pass]);
@@ -36,15 +41,33 @@
 
           if ($verify_user->rowCount() > 0):
             setcookie('user_id', $row['id'], time() + 60*60*24*30, '/');
+            $_SESSION['scss_msg'] = 'Registered successfully!';
             header('location: home.php');
-            return;
+            exit;
           else:
-            $error_msg[] = 'Something went wrong';
+            $_SESSION['errr_msg'] = 'Something went wrong';
+            header('location: register.php');
+            exit;
           endif;
         endif;
       endif;
     endif;
   endif;
+
+  if (isset($_SESSION['errr_msg'])) {
+    $error_msg[] = $_SESSION['errr_msg'];
+    unset($_SESSION['errr_msg']);
+  }
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+  }
 
 ?>
 

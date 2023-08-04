@@ -26,6 +26,6 @@
 
   </section>
 
-  <div class="credit">&copy; copyright @ <?= date('Y') ?> by <span>Zepp</span> | all rights reserved</div>
+  <div class="credit">&copy; copyright <?= date('Y') ?> by <span>Zepp</span> | all rights reserved</div>
 
 </footer>

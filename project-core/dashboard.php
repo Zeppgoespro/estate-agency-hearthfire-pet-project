@@ -1,13 +1,14 @@
 <?php
 
   include './components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['user_id'])):
     $user_id = $_COOKIE['user_id'];
   else:
     $user_id = '';
     header('location: ./login.php');
-    return;
+    exit;
   endif;
 
 ?>
