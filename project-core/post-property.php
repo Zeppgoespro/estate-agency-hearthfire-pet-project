@@ -1,12 +1,14 @@
 <?php
 
   include './components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['user_id'])):
     $user_id = $_COOKIE['user_id'];
   else:
     $user_id = '';
-    header('location: ./login.php');
+    $_SESSION['wrnng_msg'] = 'You need to login first';
+    header('location: login.php');
     exit;
   endif;
 
@@ -123,10 +125,9 @@
       $post_property->execute([$id, $user_id, $property_name, $address, $price, $type, $offer, $status, $furniture, $bhk, $deposite, $bedroom, $bathroom, $balcony, $carpet, $age, $total_floors, $room_floor, $loan, $lift, $security, $play_ground, $garden, $water_supply, $power_backup, $parking, $gym, $shopping_mall, $hospital, $school, $market_area, $rename_image_1, $rename_image_2, $rename_image_3, $rename_image_4, $rename_image_5, $description]);
       move_uploaded_file($image_1_tmp_name, $image_1_folder);
 
-      $success_msg[] = 'Property posted';
-
-      header('location: ./home.php');
-      return;
+      $_SESSION['scss_msg'] = 'Property posted!';
+      header('location: my-listings.php');
+      exit;
     }
 
   endif;
@@ -263,18 +264,18 @@
           </select>
         </div>
         <div class="box">
-          <p>how many balconys <span>*</span></p>
+          <p>how many balconies <span>*</span></p>
           <select name="balcony" class="input" required>
-            <option value="0">0 balcony</option>
+            <option value="0">0 balconies</option>
             <option value="1">1 balcony</option>
-            <option value="2">2 balconys</option>
-            <option value="3">3 balconys</option>
-            <option value="4">4 balconys</option>
-            <option value="5">5 balconys</option>
-            <option value="6">6 balconys</option>
-            <option value="7">7 balconys</option>
-            <option value="8">8 balconys</option>
-            <option value="9">9 balconys</option>
+            <option value="2">2 balconies</option>
+            <option value="3">3 balconies</option>
+            <option value="4">4 balconies</option>
+            <option value="5">5 balconies</option>
+            <option value="6">6 balconies</option>
+            <option value="7">7 balconies</option>
+            <option value="8">8 balconies</option>
+            <option value="9">9 balconies</option>
           </select>
         </div>
         <div class="box">
@@ -283,15 +284,15 @@
         </div>
         <div class="box">
           <p>property age <span>*</span></p>
-          <input type="number" name="age" maxlength="2" min="0" max="99" required placeholder="how old is property?" class="input">
+          <input type="number" name="age" maxlength="3" min="0" max="999" required placeholder="how old is property?" class="input">
         </div>
         <div class="box">
           <p>total floors <span>*</span></p>
           <input type="number" name="total_floors" maxlength="2" min="0" max="99" required placeholder="how many floors available?" class="input">
         </div>
         <div class="box">
-          <p>rooms per floor <span>*</span></p>
-          <input type="number" name="room_floor" maxlength="2" min="0" max="99" required placeholder="property floor number" class="input">
+          <p>rooms per floor<span>*</span></p>
+          <input type="number" name="room_floor" maxlength="2" min="0" max="99" required placeholder="how many rooms per floor?" class="input">
         </div>
         <div class="box">
           <p>loan <span>*</span></p>
@@ -303,7 +304,7 @@
       </div>
       <div class="box">
         <p>description <span>*</span></p>
-        <textarea name="description" cols="30" rows="10" maxlength="1000" required placeholder="enter property description" class="input"></textarea>
+        <textarea name="description" cols="30" rows="10" maxlength="1000" required placeholder="enter property description..." class="input"></textarea>
       </div>
       <div class="checkbox">
         <div class="box">

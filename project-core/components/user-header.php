@@ -25,7 +25,7 @@
             </ul>
           </li>
           <li>
-            <a href="#">options <span class="fas fa-angle-down"></span></a>
+            <a href="#">our options <span class="fas fa-angle-down"></span></a>
             <ul>
               <li><a href="../search.php">filter search</a></li>
               <li><a href="../listings.php">all listings</a></li>

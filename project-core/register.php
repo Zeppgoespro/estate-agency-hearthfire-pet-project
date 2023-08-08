@@ -45,7 +45,7 @@
             header('location: home.php');
             exit;
           else:
-            $_SESSION['errr_msg'] = 'Something went wrong';
+            $_SESSION['errr_msg'] = 'Something went wrong!';
             header('location: register.php');
             exit;
           endif;

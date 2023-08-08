@@ -22,13 +22,13 @@
     $verify_message->execute([$name, $email, $number, $message]);
 
     if ($verify_message->rowCount() > 0):
-      $_SESSION['wrnng_msg'] = 'message sent already';
+      $_SESSION['wrnng_msg'] = 'Message sent already';
       header('location: contact.php#search-form');
       exit;
     else:
       $insert_message = $conn->prepare("INSERT INTO `messages` (id, name, email, number, message) VALUES (?,?,?,?,?)");
       $insert_message->execute([$message_id, $name, $email, $number, $message]);
-      $_SESSION['scss_msg'] = 'message sent successfully!';
+      $_SESSION['scss_msg'] = 'Message sent successfully!';
       header('location: contact.php#contact-form');
       exit;
     endif;
@@ -110,12 +110,12 @@
         </div>
 
         <div class="box active">
-          <h3><span>when will i get the possession?</span><i class="fas fa-angle-down"></i></h3>
+          <h3><span>when will I get the possession?</span><i class="fas fa-angle-down"></i></h3>
           <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque maiores veritatis harum quia dolorem officiis rem illum vel omnis ad fugit, repellendus ipsum, neque quibusdam excepturi? Sunt quia vero iure?</p>
         </div>
 
         <div class="box">
-          <h3><span>where can i pay the rent?</span><i class="fas fa-angle-down"></i></h3>
+          <h3><span>where can I pay the rent?</span><i class="fas fa-angle-down"></i></h3>
           <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque maiores veritatis harum quia dolorem officiis rem illum vel omnis ad fugit, repellendus ipsum, neque quibusdam excepturi? Sunt quia vero iure?</p>
         </div>
 

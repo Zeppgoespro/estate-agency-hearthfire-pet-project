@@ -1,19 +1,25 @@
 <?php
 
   include './components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['user_id'])):
     $user_id = $_COOKIE['user_id'];
   else:
     $user_id = '';
+    $_SESSION['wrnng_msg'] = 'You need to login first';
+    header('location: login.php');
+    exit;
   endif;
 
   if (isset($_GET['get_id'])):
     $get_id = $_GET['get_id'];
+    $_COOKIE['u-p_get_id'] = $_GET['get_id'];
   else:
     $get_id = '';
-    header('location: ./home.php');
-    return;
+    $_SESSION['wrnng_msg'] = 'There is no property selected';
+    header('location: my-listings.php');
+    exit;
   endif;
 
   if (isset($_POST['update'])):
@@ -57,7 +63,9 @@
 
     if (!empty($image_1)):
       if ($image_1_size > 2000000):
-        $warning_msg[] = 'image 1 size is too large';
+        $_SESSION['wrnng_msg'] = 'Image 1 size is too large';
+        header('location: update-property.php' . '?get_id='. $_COOKIE['u-p_get_id']);
+        exit;
       else:
         $update_image_1 = $conn->prepare("UPDATE `properties` SET image_1 = ? WHERE id = ?");
         $update_image_1->execute([$rename_image_1, $update_id]);
@@ -80,7 +88,9 @@
 
     if (!empty($image_2)):
       if ($image_2_size > 2000000):
-        $warning_msg[] = 'image 2 size is too large';
+        $_SESSION['wrnng_msg'] = 'Image 2 size is too large';
+        header('location: update-property.php' . '?get_id='. $_COOKIE['u-p_get_id']);
+        exit;
       else:
         $update_image_2 = $conn->prepare("UPDATE `properties` SET image_2 = ? WHERE id = ?");
         $update_image_2->execute([$rename_image_2, $update_id]);
@@ -103,7 +113,9 @@
 
     if (!empty($image_3)):
       if ($image_3_size > 2000000):
-        $warning_msg[] = 'image 3 size is too large';
+        $_SESSION['wrnng_msg'] = 'Image 3 size is too large';
+        header('location: update-property.php' . '?get_id='. $_COOKIE['u-p_get_id']);
+        exit;
       else:
         $update_image_3 = $conn->prepare("UPDATE `properties` SET image_3 = ? WHERE id = ?");
         $update_image_3->execute([$rename_image_3, $update_id]);
@@ -126,7 +138,9 @@
 
     if (!empty($image_4)):
       if ($image_4_size > 2000000):
-        $warning_msg[] = 'image 4 size is too large';
+        $_SESSION['wrnng_msg'] = 'Image 4 size is too large';
+        header('location: update-property.php' . '?get_id='. $_COOKIE['u-p_get_id']);
+        exit;
       else:
         $update_image_4 = $conn->prepare("UPDATE `properties` SET image_4 = ? WHERE id = ?");
         $update_image_4->execute([$rename_image_4, $update_id]);
@@ -149,7 +163,9 @@
 
     if (!empty($image_5)):
       if ($image_5_size > 2000000):
-        $warning_msg[] = 'image 5 size is too large';
+        $_SESSION['wrnng_msg'] = 'Image 5 size is too large';
+        header('location: update-property.php' . '?get_id='. $_COOKIE['u-p_get_id']);
+        exit;
       else:
         $update_image_5 = $conn->prepare("UPDATE `properties` SET image_5 = ? WHERE id = ?");
         $update_image_5->execute([$rename_image_5, $update_id]);
@@ -166,8 +182,9 @@
 
     $update_listing->execute([$property_name, $address, $price, $type, $offer, $status, $furniture, $bhk, $deposite, $bedroom, $bathroom, $balcony, $carpet, $age, $total_floors, $room_floor, $loan, $lift, $security, $play_ground, $garden, $water_supply, $power_backup, $parking, $gym, $shopping_mall, $hospital, $school, $market_area, $description, $update_id]);
 
-    $success_msg[] = 'listing updated';
-
+    $_SESSION['scss_msg'] = 'Listing updated!';
+    header('location: update-property.php' . '?get_id='. $_COOKIE['u-p_get_id']);
+    exit;
   endif;
 
   if (isset($_POST['delete_image_2'])):
@@ -177,7 +194,9 @@
 
     if ($old_image_2 != ''):
       unlink('./uploaded-files/'.$old_image_2);
-      $success_msg[] = 'image 2 deleted';
+      $_SESSION['scss_msg'] = 'Image 2 deleted!';
+      header('location: update-property.php' . '?get_id='. $_COOKIE['u-p_get_id']);
+      exit;
     endif;
 
   endif;
@@ -189,7 +208,9 @@
 
     if ($old_image_3 != ''):
       unlink('./uploaded-files/'.$old_image_3);
-      $success_msg[] = 'image 3 deleted';
+      $_SESSION['scss_msg'] = 'Image 3 deleted!';
+      header('location: update-property.php' . '?get_id='. $_COOKIE['u-p_get_id']);
+      exit;
     endif;
 
   endif;
@@ -201,7 +222,9 @@
 
     if ($old_image_4 != ''):
       unlink('./uploaded-files/'.$old_image_4);
-      $success_msg[] = 'image 4 deleted';
+      $_SESSION['scss_msg'] = 'Image 4 deleted!';
+      header('location: update-property.php' . '?get_id='. $_COOKIE['u-p_get_id']);
+      exit;
     endif;
 
   endif;
@@ -213,10 +236,24 @@
 
     if ($old_image_5 != ''):
       unlink('./uploaded-files/'.$old_image_5);
-      $success_msg[] = 'image 5 deleted';
+      $_SESSION['scss_msg'] = 'Image 5 deleted!';
+      header('location: update-property.php' . '?get_id='. $_COOKIE['u-p_get_id']);
+      exit;
     endif;
 
   endif;
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+    unset($_COOKIE['u-p_get_id']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+    unset($_COOKIE['u-p_get_id']);
+  }
 
 ?>
 

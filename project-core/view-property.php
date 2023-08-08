@@ -7,17 +7,22 @@
     $user_id = $_COOKIE['user_id'];
   else:
     $user_id = '';
+    $_SESSION['wrnng_msg'] = 'You need to login first';
+    header('location: login.php');
+    exit;
   endif;
 
   if (isset($_GET['get_id'])):
     $get_id = $_GET['get_id'];
+    $_COOKIE['v-p_get_id'] = $_GET['get_id'];
   else:
     $get_id = '';
-    header('location: ./home.php');
-    return;
+    $_SESSION['wrnng_msg'] = 'No property selected';
+    header('location: listings.php');
+    exit;
   endif;
 
-  $thisFilePath = str_replace('/var/www/', '', __FILE__);
+  $thisFilePath = str_replace('/var/www/', '', __FILE__ . '?get_id=' . $_GET['get_id']);
   include './components/save-send.php';
 
 ?>

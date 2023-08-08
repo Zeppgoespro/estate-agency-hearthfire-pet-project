@@ -1,13 +1,15 @@
 <?php
 
   include './components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['user_id'])):
     $user_id = $_COOKIE['user_id'];
   else:
     $user_id = '';
-    header('location: ./login.php');
-    return;
+    $_SESSION['wrnng_msg'] = 'You need to login first';
+    header('location: login.php');
+    exit;
   endif;
 
   if (isset($_POST['delete'])):
@@ -51,13 +53,26 @@
       $delete_listings = $conn->prepare("DELETE FROM `properties` WHERE id = ?");
       $delete_listings->execute([$delete_id]);
 
-      $success_msg[] = 'listing deleted';
-
+      $_SESSION['scss_msg'] = 'Listing deleted!';
+      header('location: my-listings.php');
+      exit;
     else:
-      $warning_msg[] = 'listing deleted already';
+      $_SESSION['wrnng_msg'] = 'Listing deleted already';
+      header('location: my-listings.php');
+      exit;
     endif;
 
   endif;
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+  }
 
 ?>
 

@@ -6,7 +6,7 @@
       <a href="tel:9998885555"><i class="fas fa-phone"></i><span>+7 999 888 5555</span></a>
       <a href="tel:9996663333"><i class="fas fa-phone"></i><span>+7 999 666 3333</span></a>
       <a href="mailto:admn@hf.com"><i class="fas fa-envelope"></i><span>admn@hf.com</span></a>
-      <a href="#"><i class="fas fa-map-marker-alt"></i><span>ald'ruhn, morrowind</span></a>
+      <a href="#"><i class="fas fa-map-marker-alt"></i><span>Ald'ruhn, Morrowind</span></a>
     </div>
 
     <div class="box">

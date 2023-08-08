@@ -14,7 +14,7 @@
 
         $remove_saved = $conn->prepare('DELETE FROM `saved` WHERE property_id = ? AND user_id = ?');
         $remove_saved->execute([$listing_id, $user_id]);
-        $_SESSION['scss_msg'] = 'removed from saved';
+        $_SESSION['scss_msg'] = 'Removed from saved!';
         header('Location: '. $thisFilePath);
         exit;
 
@@ -22,7 +22,7 @@
 
         $add_saved = $conn->prepare ('INSERT INTO `saved` (id, property_id, user_id) VALUES (?,?,?)');
         $add_saved->execute([$save_id, $listing_id, $user_id]);
-        $_SESSION['scss_msg'] = 'added to saved';
+        $_SESSION['scss_msg'] = 'Added to saved!';
         header('Location: '. $thisFilePath);
         exit;
 
@@ -30,7 +30,7 @@
 
     else:
 
-      $_SESSION['wrnng_msg'] = 'please login first';
+      $_SESSION['wrnng_msg'] = 'Please login first';
       header('Location: '. $thisFilePath);
       exit;
 
@@ -55,7 +55,7 @@
 
       if ($verify_request->rowCount() > 0):
 
-        $_SESSION['wrnng_msg'] = 'request sent already';
+        $_SESSION['wrnng_msg'] = 'Request sent already';
         header('Location: '. $thisFilePath);
         exit;
 
@@ -64,7 +64,7 @@
         $add_request = $conn->prepare("INSERT INTO `requests` (id, property_id, sender, receiver) VALUES (?,?,?,?)");
         $add_request->execute([$request_id, $listing_id, $user_id, $receiver]);
 
-        $_SESSION['scss_msg'] = 'request sent successfully';
+        $_SESSION['scss_msg'] = 'Request sent successfully!';
         header('Location: '. $thisFilePath);
         exit;
 
@@ -72,7 +72,7 @@
 
     else:
 
-      $_SESSION['wrnng_msg'] = 'please login first';
+      $_SESSION['wrnng_msg'] = 'Please login first';
       header('Location: '. $thisFilePath);
       exit;
 

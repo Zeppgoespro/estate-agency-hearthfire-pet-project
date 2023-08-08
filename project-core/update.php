@@ -7,6 +7,7 @@
     $user_id = $_COOKIE['user_id'];
   else:
     $user_id = '';
+    $_SESSION['wrnng_msg'] = 'You need to login first';
     header('location: login.php');
     exit;
   endif;
@@ -16,40 +17,6 @@
   $fetch_account = $select_account->fetch(PDO::FETCH_ASSOC);
 
   if (isset($_POST['submit'])):
-
-    $empty_pass = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
-    $prev_pass = $fetch_account['password'];
-    $old_pass = sha1($_POST['old_pass']);
-    $new_pass = sha1($_POST['new_pass']);
-    $con_pass = sha1($_POST['con_pass']);
-
-    if ($empty_pass != $old_pass):
-      if ($old_pass != $prev_pass):
-        $_SESSION['wrnng_msg'] = 'Old password not matched';
-        header('location: update.php');
-        exit;
-      elseif ($new_pass != $empty_pass && $con_pass == $empty_pass):
-        $_SESSION['wrnng_msg'] = 'Confirmed password required';
-        header('location: update.php');
-        exit;
-      elseif ($con_pass != $new_pass):
-        $_SESSION['wrnng_msg'] = 'Confirmed password not matched';
-        header('location: update.php');
-        exit;
-      else:
-        if ($new_pass != $empty_pass):
-          $update_pass = $conn->prepare("UPDATE `users` SET password = ? WHERE id = ?");
-          $update_pass->execute([$con_pass, $user_id]);
-          // $_SESSION['scss_msg'] = 'Password updated';
-          // header('location: update.php');
-          // exit;
-        else:
-          $_SESSION['wrnng_msg'] = 'Nothing changed';
-          header('location: update.php');
-          exit;
-        endif;
-      endif;
-    endif;
 
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -86,6 +53,40 @@
       // $_SESSION['scss_msg'] = 'Name updated';
       // header('location: update.php');
       // exit;
+    endif;
+
+    $empty_pass = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
+    $prev_pass = $fetch_account['password'];
+    $old_pass = sha1($_POST['old_pass']);
+    $new_pass = sha1($_POST['new_pass']);
+    $con_pass = sha1($_POST['con_pass']);
+
+    if ($old_pass != $empty_pass):
+      if ($old_pass != $prev_pass):
+        $_SESSION['wrnng_msg'] = 'Old password not matched';
+        header('location: update.php');
+        exit;
+      elseif ($new_pass != $empty_pass && $con_pass == $empty_pass):
+        $_SESSION['wrnng_msg'] = 'Confirmed password required';
+        header('location: update.php');
+        exit;
+      elseif ($con_pass != $new_pass):
+        $_SESSION['wrnng_msg'] = 'Confirmed password not matched';
+        header('location: update.php');
+        exit;
+      else:
+        if ($new_pass != $empty_pass):
+          $update_pass = $conn->prepare("UPDATE `users` SET password = ? WHERE id = ?");
+          $update_pass->execute([$con_pass, $user_id]);
+          // $_SESSION['scss_msg'] = 'Password updated';
+          // header('location: update.php');
+          // exit;
+        elseif ($name == '' && $email == '' && $number == '' && $new_pass == $empty_pass && $con_pass == $empty_pass && $old_pass != $empty_pass):
+          $_SESSION['wrnng_msg'] = 'Nothing changed';
+          header('location: update.php');
+          exit;
+        endif;
+      endif;
     endif;
 
     $_SESSION['scss_msg'] = 'Profile updated!';

@@ -9,7 +9,56 @@
     $user_id = '';
   endif;
 
-  $thisFilePath = str_replace('/var/www/', '', __FILE__ . '#listings');
+  if (isset($_POST['h_search'])):
+
+    $h_location = $_POST['h_location'];
+    $h_type = $_POST['h_type'];
+    $h_offer = $_POST['h_offer'];
+    $h_min = $_POST['h_min'];
+    $h_max = $_POST['h_max'];
+
+    $_SESSION['srch_sql'] = "SELECT * FROM `properties` WHERE address LIKE '%{$h_location}%' AND type LIKE '%{$h_type}%' AND offer LIKE '%{$h_offer}%' AND price BETWEEN $h_min AND $h_max ORDER BY date DESC";
+    header('location: search.php#listings');
+    exit;
+
+  elseif (isset($_POST['filter_search'])):
+
+    $location = $_POST['location'];
+    $type = $_POST['type'];
+    $offer = $_POST['offer'];
+    $bhk = $_POST['bhk'];
+    $min = $_POST['min'];
+    $max = $_POST['max'];
+    $status = $_POST['status'];
+    $furniture = $_POST['furniture'];
+
+    $_SESSION['srch_sql'] = "SELECT * FROM `properties` WHERE address LIKE '%{$location}%' AND type LIKE '%{$type}%' AND offer LIKE '%{$offer}%' AND status LIKE '%{$status}%' AND furnished LIKE '%{$furniture}%' AND bhk LIKE '%{$bhk}%' AND price BETWEEN $min AND $max ORDER BY date DESC";
+    header('location: search.php#listings');
+    exit;
+
+  endif;
+
+  switch (isset($_SESSION['srch_sql'])):
+
+    case true:
+      $select_listings = $conn->prepare($_SESSION['srch_sql']);
+      $select_listings->execute();
+    break;
+
+    case false:
+      $select_listings = $conn->prepare("SELECT * FROM `properties` ORDER BY date DESC LIMIT 6");
+      $select_listings->execute();
+    break;
+
+  endswitch;
+
+  if (isset($_POST['clear_search'])):
+    unset($_SESSION['srch_sql']);
+    header('location: search.php');
+    exit;
+  endif;
+
+  $thisFilePath = str_replace('/var/www/', '', __FILE__);
   include './components/save-send.php';
 
 ?>
@@ -53,7 +102,7 @@
             <p>property type <span>*</span></p>
             <select name="type" class="input" required>
               <option value="flat">flat</option>
-              <option value="house">house</option>
+              <option selected value="house">house</option>
               <option value="shop">shop</option>
             </select>
           </div>
@@ -114,7 +163,7 @@
               <option value="75000">75k</option>
               <option value="100000">100k</option>
               <option value="150000">150k</option>
-              <option value="100000000000">no limit</option>
+              <option value="100000000000" selected>no limit</option>
             </select>
           </div>
           <div class="box">
@@ -144,50 +193,13 @@
   <div id="open-filter" class="fas fa-filter" title="Open filter"></div>
 
 
-  <?php
-
-    if (isset($_POST['h_search'])):
-
-      $h_location = $_POST['h_location'];
-      $h_type = $_POST['h_type'];
-      $h_offer = $_POST['h_offer'];
-      $h_min = $_POST['h_min'];
-      $h_max = $_POST['h_max'];
-
-      $select_listings = $conn->prepare("SELECT * FROM `properties` WHERE address LIKE '%{$h_location}%' AND type LIKE '%{$h_type}%' AND offer LIKE '%{$h_offer}%' AND price BETWEEN $h_min AND $h_max ORDER BY date DESC");
-      $select_listings->execute();
-
-    elseif (isset($_POST['filter_search'])):
-
-      $location = $_POST['location'];
-      $type = $_POST['type'];
-      $offer = $_POST['offer'];
-      $bhk = $_POST['bhk'];
-      $min = $_POST['min'];
-      $max = $_POST['max'];
-      $status = $_POST['status'];
-      $furniture = $_POST['furniture'];
-
-      $select_listings = $conn->prepare("SELECT * FROM `properties` WHERE address LIKE '%{$location}%' AND type LIKE '%{$type}%' AND offer LIKE '%{$offer}%' AND status LIKE '%{$status}%' AND furnished LIKE '%{$furniture}%' AND bhk LIKE '%{$bhk}%' AND price BETWEEN $min AND $max ORDER BY date DESC");
-      $select_listings->execute();
-
-    else:
-
-      $select_listings = $conn->prepare("SELECT * FROM `properties` ORDER BY  date DESC LIMIT 6");
-      $select_listings->execute();
-
-    endif;
-
-  ?>
-
-
   <!-- listings section starts -->
 
     <section class="listings" id="listings">
 
       <?php
 
-        switch (isset($_POST['h_search']) || isset($_POST['filter_search'])):
+        switch (isset($_SESSION['srch_sql'])):
 
           case true:
             echo '<h1 class="heading">search result</h1>';
@@ -198,6 +210,23 @@
           break;
 
         endswitch;
+
+        if (isset($_SESSION['srch_sql'])):
+          echo <<<'CLEAR'
+          <form action="" method="post">
+            <input type="submit" name="clear_search" value="clear search"
+              class="btn"
+              style="
+                background-color: var(--light-color);
+                width: 35%;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 2.5rem;
+              "
+            >
+          </form>
+          CLEAR;
+        endif;
 
       ?>
 

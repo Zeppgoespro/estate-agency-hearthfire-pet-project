@@ -22,10 +22,13 @@
 
       $delete_request = $conn->prepare("DELETE FROM `requests` WHERE id = ?");
       $delete_request->execute([$delete_id]);
-      $success_msg = 'request deleted';
-
+      $_SESSION['scss_msg'] = 'request deleted';
+      header('location: requests.php');
+      exit;
     else:
-      $warning_msg[] = 'request deleted already';
+      $_SESSION['wrnng_msg'] = 'request deleted already';
+      header('location: requests.php');
+      exit;
     endif;
 
   endif;
@@ -69,9 +72,9 @@
 
   <section class="requests">
 
-    <h1 class="heading">requests received</h1>
+    <h1 class="heading">requests received:</h1>
 
-    <div class="box-container">
+    <div class="box-container" style="margin-bottom: 3rem;">
 
       <?php
 
@@ -96,7 +99,7 @@
         <p>name: <span><?= $fetch_sender['name'] ?></span></p>
         <p>number: <a href="tel:<?= $fetch_sender['number'] ?>"><?= $fetch_sender['number'] ?></a></p>
         <p>email: <a href="tel:<?= $fetch_sender['email'] ?>"><?= $fetch_sender['email'] ?></a></p>
-        <p>requests for: <a href="./view-property.php?get_id=<?= $fetch_property['id'] ?>"><?= $fetch_property['property_name'] ?></a></p>
+        <p>request for: <a href="./view-property.php?get_id=<?= $fetch_property['id'] ?>"><?= $fetch_property['property_name'] ?></a></p>
 
         <form action="" method="post">
           <input type="hidden" name="request_id" value="<?= $fetch_requests['id'] ?>">
@@ -109,7 +112,54 @@
 
           endwhile;
         else:
-          echo '<p class="empty">you have no requests</p>';
+          echo '<p class="empty" style="border-radius: .5rem;">you have no requests</p>';
+        endif;
+
+      ?>
+
+    </div>
+
+    <h1 class="heading">requests sent:</h1>
+
+    <div class="box-container">
+
+      <?php
+
+        $select_requests = $conn->prepare("SELECT * FROM `requests` WHERE sender = ? ORDER BY date DESC");
+        $select_requests->execute([$user_id]);
+
+        if ($select_requests->rowCount() > 0):
+          while ($fetch_requests = $select_requests->fetch(PDO::FETCH_ASSOC)):
+
+            $select_sender = $conn->prepare("SELECT * FROM `users` WHERE id = ?");
+            $select_sender->execute([$fetch_requests['sender']]);
+            $fetch_sender = $select_sender->fetch(PDO::FETCH_ASSOC);
+
+            $select_properties = $conn->prepare("SELECT * FROM `properties` WHERE id = ?");
+            $select_properties->execute([$fetch_requests['property_id']]);
+            $fetch_property = $select_properties->fetch(PDO::FETCH_ASSOC);
+
+      ?>
+
+      <div class="box">
+
+        <p>name: <span><?= $fetch_sender['name'] ?></span></p>
+        <p>number: <a href="tel:<?= $fetch_sender['number'] ?>"><?= $fetch_sender['number'] ?></a></p>
+        <p>email: <a href="tel:<?= $fetch_sender['email'] ?>"><?= $fetch_sender['email'] ?></a></p>
+        <p>request for: <a href="./view-property.php?get_id=<?= $fetch_property['id'] ?>"><?= $fetch_property['property_name'] ?></a></p>
+
+        <form action="" method="post">
+          <input type="hidden" name="request_id" value="<?= $fetch_requests['id'] ?>">
+          <input type="submit" value="delete request" name="delete" class="btn" onclick="return confirm('Delete this request?');">
+        </form>
+
+      </div>
+
+      <?php
+
+          endwhile;
+        else:
+          echo '<p class="empty" style="border-radius: 1rem;">you have no requests</p>';
         endif;
 
       ?>

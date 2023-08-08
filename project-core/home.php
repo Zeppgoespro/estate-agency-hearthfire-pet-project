@@ -43,7 +43,7 @@
 
     <section class="center">
 
-      <form action="./search.php" method="post">
+      <form action="search.php" method="post">
         <h3>find your perfect home</h3>
         <div class="box">
           <p>enter location <span>*</span></p>
@@ -54,7 +54,7 @@
             <p>property type <span>*</span></p>
             <select name="h_type" class="input" required>
               <option value="flat">flat</option>
-              <option value="house">house</option>
+              <option selected value="house">house</option>
               <option value="shop">shop</option>
             </select>
           </div>
@@ -101,7 +101,7 @@
               <option value="75000">75k</option>
               <option value="100000">100k</option>
               <option value="150000">150k</option>
-              <option value="100000000000">no limit</option>
+              <option value="100000000000" selected>no limit</option>
             </select>
           </div>
         </div>
@@ -126,37 +126,37 @@
         <div class="box">
           <img src="./images/icon-1.png" alt="This is icon">
           <h3>buy house</h3>
-          <p>Description</p>
+          <p>Description...</p>
         </div>
 
         <div class="box">
           <img src="./images/icon-2.png" alt="This is icon">
           <h3>rent house</h3>
-          <p>Description</p>
+          <p>Description...</p>
         </div>
 
         <div class="box">
           <img src="./images/icon-3.png" alt="This is icon">
           <h3>sell house</h3>
-          <p>Description</p>
+          <p>Description...</p>
         </div>
 
         <div class="box">
           <img src="./images/icon-4.png" alt="This is icon">
           <h3>flats and buildings</h3>
-          <p>Description</p>
+          <p>Description...</p>
         </div>
 
         <div class="box">
           <img src="./images/icon-5.png" alt="This is icon">
           <h3>shops and malls</h3>
-          <p>Description</p>
+          <p>Description...</p>
         </div>
 
         <div class="box">
           <img src="./images/icon-6.png" alt="This is icon">
           <h3>24/7 service</h3>
-          <p>Description</p>
+          <p>Description...</p>
         </div>
 
       </div>
