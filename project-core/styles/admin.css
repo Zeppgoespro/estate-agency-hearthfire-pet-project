@@ -199,7 +199,9 @@ section {
 }
 
 .header .navbar a {
-  display: block;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   background-color: var(--light-bg);
   border: var(--border);
   padding: 1.3rem;
@@ -211,7 +213,9 @@ section {
 
 .header .navbar a i {
   color: var(--black);
+  width: 2rem;
   margin-right: 1rem;
+  margin-left: 1rem;
 }
 
 .header .navbar a:hover {
@@ -320,6 +324,15 @@ section {
   color: var(--black);
   font-size: 1.8rem;
   margin: 1rem 0;
+}
+
+.form-container form a {
+  font-weight: bold;
+  color: var(--main-color);
+}
+
+.form-container form a:hover {
+  text-decoration: underline;
 }
 
 /* listings section */

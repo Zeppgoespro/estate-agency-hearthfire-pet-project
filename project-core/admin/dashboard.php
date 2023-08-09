@@ -1,14 +1,25 @@
 <?php
 
   include '../components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['admin_id'])):
     $admin_id = $_COOKIE['admin_id'];
   else:
     $admin_id = '';
-    header('location: ../admin/login.php');
-    return;
+    header('location: ./login.php');
+    exit;
   endif;
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+  }
 
 ?>
 
@@ -55,7 +66,7 @@
 
           ?>
 
-          <h3>welcome!</h3>
+          <h3>Welcome!</h3>
           <p><?= $fetch_profile['name'] ?></p>
           <a href="./update.php" class="btn">update profile</a>
 

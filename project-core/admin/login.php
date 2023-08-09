@@ -1,6 +1,7 @@
 <?php
 
   include '../components/connect.php';
+  session_start();
 
   if (isset($_POST['submit'])):
 
@@ -13,13 +14,26 @@
 
     if ($verify_admin->rowCount() > 0):
       setcookie('admin_id', $row['id'], time() + 60*60*24*30, '/');
+      $_SESSION['scss_msg'] = 'Logged in successfully!';
       header('location: ./dashboard.php');
-      return;
+      exit;
     else:
-      $warning_msg[] = 'incorrect name or password';
+      $_SESSION['wrnng_msg'] = 'Incorrect name or password';
+      header('location:./login.php');
+      exit;
     endif;
 
   endif;
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+  }
 
 ?>
 
@@ -54,12 +68,14 @@
     <form action="" method="post">
 
       <h3>welcome back</h3>
-      <p>def name = <span>vader</span> || def password = <span>pushkin</span></p>
 
       <input type="text" class="box" name="name" required placeholder="enter your name" maxlength="20" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" class="box" name="pass" required placeholder="enter your password" maxlength="20" oninput="this.value = this.value.replace(/\s/g, '')">
 
       <input type="submit" value="login" name="submit" class="btn">
+
+      <p style="margin-top: 1rem;">You can also <a href="./register.php">register</a> a new admin</p>
+      <p>Or go the the <a href="../home.php">main page</a></p>
 
     </form>
 

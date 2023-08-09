@@ -7,6 +7,7 @@
     $user_id = $_COOKIE['user_id'];
   else:
     $user_id = '';
+    $_SESSION['wrnng_msg'] = 'You need to login first';
     header('location: login.php');
     exit;
   endif;
@@ -22,11 +23,11 @@
 
       $delete_request = $conn->prepare("DELETE FROM `requests` WHERE id = ?");
       $delete_request->execute([$delete_id]);
-      $_SESSION['scss_msg'] = 'request deleted';
+      $_SESSION['scss_msg'] = 'Request deleted!';
       header('location: requests.php');
       exit;
     else:
-      $_SESSION['wrnng_msg'] = 'request deleted already';
+      $_SESSION['wrnng_msg'] = 'Request deleted already';
       header('location: requests.php');
       exit;
     endif;
@@ -96,7 +97,7 @@
 
       <div class="box">
 
-        <p>name: <span><?= $fetch_sender['name'] ?></span></p>
+        <p>from whom: <span><?= $fetch_sender['name'] ?></span></p>
         <p>number: <a href="tel:<?= $fetch_sender['number'] ?>"><?= $fetch_sender['number'] ?></a></p>
         <p>email: <a href="tel:<?= $fetch_sender['email'] ?>"><?= $fetch_sender['email'] ?></a></p>
         <p>request for: <a href="./view-property.php?get_id=<?= $fetch_property['id'] ?>"><?= $fetch_property['property_name'] ?></a></p>
@@ -112,7 +113,7 @@
 
           endwhile;
         else:
-          echo '<p class="empty" style="border-radius: .5rem;">you have no requests</p>';
+          echo '<p class="empty">you have no requests</p>';
         endif;
 
       ?>
@@ -132,7 +133,7 @@
           while ($fetch_requests = $select_requests->fetch(PDO::FETCH_ASSOC)):
 
             $select_sender = $conn->prepare("SELECT * FROM `users` WHERE id = ?");
-            $select_sender->execute([$fetch_requests['sender']]);
+            $select_sender->execute([$fetch_requests['receiver']]);
             $fetch_sender = $select_sender->fetch(PDO::FETCH_ASSOC);
 
             $select_properties = $conn->prepare("SELECT * FROM `properties` WHERE id = ?");
@@ -143,7 +144,7 @@
 
       <div class="box">
 
-        <p>name: <span><?= $fetch_sender['name'] ?></span></p>
+        <p>to whom: <span><?= $fetch_sender['name'] ?></span></p>
         <p>number: <a href="tel:<?= $fetch_sender['number'] ?>"><?= $fetch_sender['number'] ?></a></p>
         <p>email: <a href="tel:<?= $fetch_sender['email'] ?>"><?= $fetch_sender['email'] ?></a></p>
         <p>request for: <a href="./view-property.php?get_id=<?= $fetch_property['id'] ?>"><?= $fetch_property['property_name'] ?></a></p>
@@ -159,7 +160,7 @@
 
           endwhile;
         else:
-          echo '<p class="empty" style="border-radius: 1rem;">you have no requests</p>';
+          echo '<p class="empty">you have no requests</p>';
         endif;
 
       ?>

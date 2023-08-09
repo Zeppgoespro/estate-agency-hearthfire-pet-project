@@ -17,6 +17,12 @@
       <div class="menu">
         <ul>
           <li>
+            <a href="../home.php">home <span class="fas fa-circle-notch"></span></a>
+            <ul>
+              <li style="display: none;">placeholder</li>
+            </ul>
+          </li>
+          <li>
             <a href="#">my listings <span class="fas fa-angle-down"></span></a>
             <ul>
               <li><a href="../dashboard.php">dashboard</a></li>
@@ -46,12 +52,16 @@
         <li><a href="../saved.php">saved <span class="fas fa-heart"></span></a></li>
         <li><a href="#">account <span class="fas fa-angle-down"></span></a>
           <ul>
-            <li><a href="../login.php">login now</a></li>
-            <li><a href="../register.php">register new</a></li>
+            <?php if ($user_id == ''): ?>
+              <li><a href="../login.php">login user</a></li>
+              <li><a href="../register.php">register user</a></li>
+            <?php endif ?>
             <?php if ($user_id != ''): ?>
               <li><a href="../update.php">update profile</a></li>
               <li><a href="../components/user-logout.php" onclick="return confirm('Logout from Hearthfire?');">logout</a></li>
             <?php endif ?>
+            <li><a href="../admin/login.php">login as admin</a></li>
+            <li><a href="../admin/register.php">register admin</a></li>
           </ul>
         </li>
       </ul>

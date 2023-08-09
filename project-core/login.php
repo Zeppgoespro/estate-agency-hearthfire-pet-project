@@ -21,7 +21,7 @@
 
     if ($verify_user->rowCount() > 0):
       setcookie('user_id', $row['id'], time() + 60*60*24*30, '/');
-      $_SESSION['scss_msg'] = 'Logined successfully!';
+      $_SESSION['scss_msg'] = 'Logged in successfully!';
       header('location: home.php');
       exit;
     else:

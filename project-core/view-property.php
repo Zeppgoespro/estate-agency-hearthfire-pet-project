@@ -7,9 +7,6 @@
     $user_id = $_COOKIE['user_id'];
   else:
     $user_id = '';
-    $_SESSION['wrnng_msg'] = 'You need to login first';
-    header('location: login.php');
-    exit;
   endif;
 
   if (isset($_GET['get_id'])):
