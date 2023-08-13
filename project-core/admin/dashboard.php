@@ -7,6 +7,7 @@
     $admin_id = $_COOKIE['admin_id'];
   else:
     $admin_id = '';
+    $_SESSION['wrnng_msg'] = 'You need to login as an admin first';
     header('location: ./login.php');
     exit;
   endif;

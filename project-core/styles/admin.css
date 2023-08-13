@@ -246,7 +246,7 @@ section {
 
 .dashboard .box-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 35rem);
+  grid-template-columns: repeat(auto-fit, 35rem); /* auto-fit */
   gap: 1.5rem;
   align-items: flex-start;
   justify-content: center;

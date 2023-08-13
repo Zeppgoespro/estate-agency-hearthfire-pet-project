@@ -1,13 +1,15 @@
 <?php
 
   include '../components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['admin_id'])):
     $admin_id = $_COOKIE['admin_id'];
   else:
     $admin_id = '';
-    header('location: ../login.php');
-    return;
+    $_SESSION['wrnng_msg'] = 'You need to login as an admin first';
+    header('location: ./login.php');
+    exit;
   endif;
 
   $select_admin = $conn->prepare("SELECT * FROM `admins` WHERE id = ? LIMIT 1");
@@ -15,49 +17,138 @@
   $fetch_admin = $select_admin->fetch(PDO::FETCH_ASSOC);
 
   if (isset($_POST['submit'])):
+
     $name = $_POST['name'];
-
-    if (!empty($name)):
-      $verify_name = $conn->prepare("SELECT name FROM `admins` WHERE name = ? LIMIT 1");
-      $verify_name->execute([$name]);
-
-      if ($verify_name->rowCount() > 0):
-        $warning_msg[] = 'name already taken';
-      else:
-        $update_name = $conn->prepare("UPDATE `admins` SET name = ? WHERE id = ?");
-        $update_name->execute([$name, $admin_id]);
-        $success_msg[] = 'name updated';
-      endif;
-
-    endif;
-
     $prev_pass = $fetch_admin['password'];
     $empty_pass = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
     $old_pass = sha1(($_POST['old_pass']));
     $new_pass = sha1(($_POST['new_pass']));
-    $c_pass = sha1(($_POST['c_pass']));
+    $c_pass   = sha1(($_POST['c_pass']));
 
-    if ($old_pass != $empty_pass):
+    if ($old_pass != $empty_pass && !empty($name)):
 
-      if($old_pass != $prev_pass) {
-        $warning_msg[] = 'old password not matched';
+      if ($old_pass != $prev_pass) {
+
+        $_SESSION['wrnng_msg'] = 'Old password not matched';
+        header('location: ./update.php');
+        exit;
+
       } elseif ($c_pass != $new_pass) {
-        $warning_msg[] = 'confirm password not matched';
+
+        $_SESSION['wrnng_msg'] = 'Confirm password not matched';
+        header('location: ./update.php');
+        exit;
+
       } else {
 
-        if ($new_pass != $empty_pass):
-          $update_pass = $conn->prepare("UPDATE `admins` SET password = ? WHERE id = ?");
-          $update_pass->execute([$c_pass, $admin_id]);
-          $success_msg[] = 'password updated';
+        if ($new_pass != $empty_pass && $c_pass != $empty_pass):
+
+          $verify_name = $conn->prepare("SELECT name FROM `admins` WHERE name = ? LIMIT 1");
+          $verify_name->execute([$name]);
+
+          if ($verify_name->rowCount() > 0):
+
+            $_SESSION['wrnng_msg'] = 'Name already taken';
+            header('location: ./update.php');
+            exit;
+
+          else:
+
+            $update_pass = $conn->prepare("UPDATE `admins` SET password = ? WHERE id = ?");
+            $update_pass->execute([$c_pass, $admin_id]);
+
+            $update_name = $conn->prepare("UPDATE `admins` SET name = ? WHERE id = ?");
+            $update_name->execute([$name, $admin_id]);
+
+            $_SESSION['scss_msg'] = 'Both name and password are changed!';
+            header('location: ./update.php');
+            exit;
+
+          endif;
+
         else:
-          $warning_msg[] = 'password cannot be empty';
+
+          $verify_name = $conn->prepare("SELECT name FROM `admins` WHERE name = ? LIMIT 1");
+          $verify_name->execute([$name]);
+
+          if ($verify_name->rowCount() > 0):
+
+            $_SESSION['wrnng_msg'] = 'Name already taken';
+            header('location: ./update.php');
+            exit;
+
+          else:
+
+            $update_name = $conn->prepare("UPDATE `admins` SET name = ? WHERE id = ?");
+            $update_name->execute([$name, $admin_id]);
+
+            $_SESSION['scss_msg'] = 'Name changed!';
+            header('location: ./update.php');
+            exit;
+
+          endif;
+
         endif;
 
       }
 
-    endif;
+    elseif ($old_pass == $empty_pass):
 
+      $_SESSION['wrnng_msg'] = 'Old password cannot be empty';
+      header('location: ./update.php');
+      exit;
+
+    elseif ($old_pass != $empty_pass && empty($name) && $new_pass == $empty_pass && $c_pass == $empty_pass):
+
+      if ($old_pass != $prev_pass):
+        $_SESSION['wrnng_msg'] = 'Wrong old password';
+        header('location: ./update.php');
+        exit;
+      else:
+        $_SESSION['wrnng_msg'] = 'Nothing changed';
+        header('location: ./update.php');
+        exit;
+      endif;
+
+    elseif (empty($name) && $old_pass != $empty_pass):
+
+      if ($old_pass != $prev_pass):
+
+        $_SESSION['wrnng_msg'] = 'Old password not matched';
+        header('location: ./update.php');
+        exit;
+
+      elseif ($c_pass != $new_pass):
+
+        $_SESSION['wrnng_msg'] = 'Confirm password not matched';
+        header('location: ./update.php');
+        exit;
+
+      else:
+
+        if ($new_pass != $empty_pass && $c_pass != $empty_pass):
+
+          $update_pass = $conn->prepare("UPDATE `admins` SET password = ? WHERE id = ?");
+          $update_pass->execute([$c_pass, $admin_id]);
+
+          $_SESSION['scss_msg'] = 'Password changed!';
+          header('location: ./update.php');
+          exit;
+
+        endif;
+      endif;
+    endif;
   endif;
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+  }
 
 ?>
 

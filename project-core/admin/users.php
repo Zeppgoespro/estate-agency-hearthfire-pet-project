@@ -1,13 +1,15 @@
 <?php
 
   include '../components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['admin_id'])):
     $admin_id = $_COOKIE['admin_id'];
   else:
     $admin_id = '';
-    header('location: ../login.php');
-    return;
+    $_SESSION['wrnng_msg'] = 'You need to login as an admin first';
+    header('location: ./login.php');
+    exit;
   endif;
 
   if (isset($_POST['delete'])):
@@ -62,13 +64,26 @@
       $delete_users = $conn->prepare("DELETE FROM `users` WHERE id = ?");
       $delete_users->execute([$delete_id]);
 
-      $success_msg[] = 'user deleted';
-
+      $_SESSION['scss_msg'] = 'User deleted!';
+      header('location: ./users.php');
+      exit;
     else:
-      $warning_msg[] = 'User deleted already';
+      $_SESSION['wrnng_msg'] = 'User deleted already';
+      header('location: ./users.php');
+      exit;
     endif;
 
   endif;
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+  }
 
 ?>
 
@@ -104,7 +119,7 @@
 
     <form action="" method="post" class="search-form">
 
-      <input type="text" name="search_box" placeholder="search listings" maxlength="100">
+      <input type="text" name="search_box" placeholder="search users" maxlength="100">
       <button type="submit" name="search_btn" class="fas fa-search"></button>
 
     </form>
