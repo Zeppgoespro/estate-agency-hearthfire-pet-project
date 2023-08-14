@@ -1,6 +1,7 @@
 <?php
 
   include '../components/connect.php';
+  session_start();
 
   if (isset($_POST['submit'])):
 
@@ -14,20 +15,37 @@
     $row = $verify_admin->fetch(PDO::FETCH_ASSOC);
 
     if ($verify_admin->rowCount() > 0):
-      $warning_msg[] = 'name already taken';
+      $_SESSION['wrnng_msg'] = 'Name already taken';
+      header('location: ./register.php');
+      exit();
+
     else:
 
       if ($pass != $c_pass):
-        $warning_msg[] = 'password not matched';
+        $_SESSION['wrnng_msg'] = 'Passwords not matched';
+        header('location: ./register.php');
+        exit();
+
       else:
         $insert_admin = $conn->prepare("INSERT INTO `admins` (id, name, password) VALUES (?,?,?)");
         $insert_admin->execute([$id, $name, $c_pass]);
-        $success_msg[] = 'new admin registered';
+        $_SESSION['scss_msg'] = 'New admin registered!';
+        header('location: ./dashboard.php');
+        exit();
+
       endif;
-
     endif;
-
   endif;
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+  }
 
 ?>
 

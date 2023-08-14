@@ -14,12 +14,6 @@ document.querySelectorAll('input[type="number"]').forEach(inputNumber => {
   }
 });
 
-document.querySelectorAll('input[type="number"]').forEach(inputNumber => {
-  inputNumber.oninput = () => {
-    if (inputNumber.value.length > inputNumber.maxLength) inputNumber.value = inputNumber.value.slice(0, inputNumber.maxLength);
-  }
-});
-
 document.querySelectorAll('.faq .box-container .box h3').forEach(heading => {
   heading.onclick = () => {
     heading.parentElement.classList.toggle('active');

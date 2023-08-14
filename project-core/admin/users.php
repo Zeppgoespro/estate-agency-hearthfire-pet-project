@@ -75,6 +75,23 @@
 
   endif;
 
+  if (isset($_POST['search_box']) || isset($_POST['search_btn'])):
+
+    $search_box = $_POST['search_box'];
+    $_SESSION['search_sql'] = "SELECT * FROM `users` WHERE name LIKE '%{$search_box}%' OR email LIKE '%{$search_box}%' OR number LIKE '%{$search_box}%'";
+    header('location: ./users.php');
+    exit;
+
+  endif;
+
+  if (isset($_SESSION['search_sql'])):
+    $select_users = $conn->prepare($_SESSION['search_sql']);
+    $select_users->execute();
+  else:
+    $select_users = $conn->prepare("SELECT * FROM `users`");
+    $select_users->execute();
+  endif;
+
   if (isset($_SESSION['wrnng_msg'])) {
     $warning_msg[] = $_SESSION['wrnng_msg'];
     unset($_SESSION['wrnng_msg']);
@@ -128,20 +145,6 @@
 
       <?php
 
-        if (isset($_POST['search_box']) || isset($_POST['search_btn'])):
-
-          $search_box = $_POST['search_box'];
-
-          $select_users = $conn->prepare("SELECT * FROM `users` WHERE name LIKE '%{$search_box}%' OR email LIKE '%{$search_box}%' OR number LIKE '%{$search_box}%'");
-          $select_users->execute();
-
-        else:
-
-          $select_users = $conn->prepare("SELECT * FROM `users`");
-          $select_users->execute();
-
-        endif;
-
         if ($select_users->rowCount() > 0):
 
           while ($fetch_users = $select_users->fetch(PDO::FETCH_ASSOC)):
@@ -169,11 +172,17 @@
       <?php
 
           endwhile;
+          unset($_SESSION['search_sql']);
 
-        elseif (isset($_POST['search_box']) || isset($_POST['search_btn'])):
+        elseif (isset($_SESSION['search_sql'])):
+
           echo '<p class="empty">no results found</p>';
+          unset($_SESSION['search_sql']);
+
         else:
+
           echo '<p class="empty">no users yet</p>';
+
         endif;
 
       ?>

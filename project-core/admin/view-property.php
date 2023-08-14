@@ -1,21 +1,24 @@
 <?php
 
   include '../components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['admin_id'])):
     $admin_id = $_COOKIE['admin_id'];
   else:
     $admin_id = '';
-    header('location: ../login.php');
-    return;
+    $_SESSION['wrnng_msg'] = 'You need to login as an admin first';
+    header('location: ./login.php');
+    exit;
   endif;
 
   if (isset($_GET['get_id'])):
     $get_id = $_GET['get_id'];
   else:
     $get_id = '';
+    $_SESSION['wrnng_msg'] = 'No property selected';
     header('location: ./listings.php');
-    return;
+    exit;
   endif;
 
   if (isset($_POST['delete'])):
@@ -62,13 +65,29 @@
       $delete_listings = $conn->prepare("DELETE FROM `properties` WHERE id = ?");
       $delete_listings->execute([$delete_id]);
 
-      $success_msg[] = 'property deleted';
+      $_SESSION['scss_msg'] = 'Property deleted!';
+      header('location: ./listings.php');
+      exit;
 
     else:
-      $warning_msg[] = 'property already deleted';
+
+      $_SESSION['wrnng_msg'] = 'Property already deleted';
+      header('location: ./listings.php');
+      exit;
+
     endif;
 
   endif;
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+  }
 
 ?>
 

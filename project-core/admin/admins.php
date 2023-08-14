@@ -34,6 +34,23 @@
 
   endif;
 
+  if (isset($_POST['search_box']) || isset($_POST['search_btn'])):
+
+    $search_box = $_POST['search_box'];
+    $_SESSION['search_sql'] = "SELECT * FROM `admins` WHERE name LIKE '%{$search_box}%'";
+    header('location: ./admins.php');
+    exit;
+
+  endif;
+
+  if (isset($_SESSION['search_sql'])):
+    $select_admins = $conn->prepare($_SESSION['search_sql']);
+    $select_admins->execute();
+  else:
+    $select_admins = $conn->prepare("SELECT * FROM `admins`");
+    $select_admins->execute();
+  endif;
+
   if (isset($_SESSION['wrnng_msg'])) {
     $warning_msg[] = $_SESSION['wrnng_msg'];
     unset($_SESSION['wrnng_msg']);
@@ -87,20 +104,6 @@
 
       <?php
 
-        if (isset($_POST['search_box']) || isset($_POST['search_btn'])):
-
-          $search_box = $_POST['search_box'];
-
-          $select_admins = $conn->prepare("SELECT * FROM `admins` WHERE name LIKE '%{$search_box}%'");
-          $select_admins->execute();
-
-        else:
-
-          $select_admins = $conn->prepare("SELECT * FROM `admins`");
-          $select_admins->execute();
-
-        endif;
-
         if ($select_admins->rowCount() > 0):
 
           while ($fetch_admins = $select_admins->fetch(PDO::FETCH_ASSOC)):
@@ -136,11 +139,17 @@
             endif;
 
           endwhile;
+          unset($_SESSION['search_sql']);
 
-        elseif (isset($_POST['search_box']) || isset($_POST['search_btn'])):
+        elseif (isset($_SESSION['search_sql'])):
+
           echo '<p class="empty">no results found</p>';
+          unset($_SESSION['search_sql']);
+
         else:
+
           echo '<p class="empty">no admins yet</p>';
+
         endif;
 
       ?>

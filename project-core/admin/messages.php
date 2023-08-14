@@ -1,13 +1,15 @@
 <?php
 
   include '../components/connect.php';
+  session_start();
 
   if (isset($_COOKIE['admin_id'])):
     $admin_id = $_COOKIE['admin_id'];
   else:
     $admin_id = '';
-    header('location: ../login.php');
-    return;
+    $_SESSION['wrnng_msg'] = 'You need to login as an admin first';
+    header('location: ./login.php');
+    exit;
   endif;
 
   if (isset($_POST['delete_id'])):
@@ -21,12 +23,43 @@
       $delete_message = $conn->prepare("DELETE FROM `messages` WHERE id = ?");
       $delete_message->execute([$delete_id]);
 
-      $success_msg[] = 'message deleted';
+      $_SESSION['scss_msg'] = 'Message deleted!';
+      header('location: ./messages.php');
+      exit;
     else:
-      $warning_msg[] = 'message already deleted';
+      $_SESSION['wrnng_msg'] = 'Message already deleted';
+      header('location: ./messages.php');
+      exit;
     endif;
 
   endif;
+
+  if (isset($_POST['search_box']) || isset($_POST['search_btn'])):
+
+    $search_box = $_POST['search_box'];
+    $_SESSION['search_sql'] = "SELECT * FROM `messages` WHERE name LIKE '%{$search_box}%' OR email LIKE '%{$search_box}%' OR number LIKE '%{$search_box}%'";
+    header('location: ./messages.php');
+    exit;
+
+  endif;
+
+  if (isset($_SESSION['search_sql'])):
+    $select_messages = $conn->prepare($_SESSION['search_sql']);
+    $select_messages->execute();
+  else:
+    $select_messages = $conn->prepare("SELECT * FROM `messages`");
+    $select_messages->execute();
+  endif;
+
+  if (isset($_SESSION['wrnng_msg'])) {
+    $warning_msg[] = $_SESSION['wrnng_msg'];
+    unset($_SESSION['wrnng_msg']);
+  }
+
+  if (isset($_SESSION['scss_msg'])) {
+    $success_msg[] = $_SESSION['scss_msg'];
+    unset($_SESSION['scss_msg']);
+  }
 
 ?>
 
@@ -58,30 +91,16 @@
 
   <section class="grid">
 
-    <h1 class="heading"></h1>
+    <h1 class="heading">Messages</h1>
 
     <form action="" method="post" class="search-form">
-      <input type="text" name="search_box" placeholder="search messages" required maxlength="100">
+      <input type="text" name="search_box" placeholder="search messages" maxlength="100">
       <button type="submit" name="search_btn" class="fas fa-search"></button>
     </form>
 
     <div class="box-container">
 
       <?php
-
-        if (isset($_POST['search_box']) || isset($_POST['search_btn'])):
-
-          $search_box = $_POST['search_box'];
-
-          $select_messages = $conn->prepare("SELECT * FROM `messages` WHERE name LIKE '%{$search_box}%' OR email LIKE '%{$search_box}%' OR number LIKE '%{$search_box}%'");
-          $select_messages->execute();
-
-        else:
-
-          $select_messages = $conn->prepare("SELECT * FROM `messages`");
-          $select_messages->execute();
-
-        endif;
 
         if ($select_messages->rowCount() > 0):
 
@@ -106,10 +125,12 @@
       <?php
 
           endwhile;
+          unset($_SESSION['search_sql']);
 
-        elseif (isset($_POST['search_box']) || isset($_POST['search_btn'])):
+        elseif (isset($_SESSION['search_sql'])):
 
           echo '<p class="empty">no results found</p>';
+          unset($_SESSION['search_sql']);
 
         else:
 

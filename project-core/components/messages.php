@@ -24,10 +24,4 @@
     endforeach;
   endif;
 
-  if (isset($info_msg)):
-    foreach ($info_msg as $info_msg):
-      echo '<script>swal("'.$info_msg.'", "", "info");</script>';
-    endforeach;
-  endif;
-
 ?>

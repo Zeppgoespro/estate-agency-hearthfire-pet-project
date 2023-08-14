@@ -61,11 +61,29 @@
       exit;
 
     else:
+
       $_SESSION['wrnng_msg'] = 'Property already deleted';
       header('location: ./listings.php');
       exit;
-    endif;
 
+    endif;
+  endif;
+
+  if (isset($_POST['search_box']) || isset($_POST['search_btn'])):
+
+    $search_box = $_POST['search_box'];
+    $_SESSION['search_sql'] = "SELECT * FROM `properties` WHERE property_name LIKE '%{$search_box}%' OR address LIKE '%{$search_box}%' ORDER BY date DESC";
+    header('location: ./listings.php');
+    exit;
+
+  endif;
+
+  if (isset($_SESSION['search_sql'])):
+    $select_listings = $conn->prepare($_SESSION['search_sql']);
+    $select_listings->execute();
+  else:
+    $select_listings = $conn->prepare("SELECT * FROM `properties` ORDER BY date DESC");
+    $select_listings->execute();
   endif;
 
   if (isset($_SESSION['wrnng_msg'])) {
@@ -120,19 +138,6 @@
       <div class="box-container">
 
         <?php
-
-          if (isset($_POST['search_box']) || isset($_POST['search_btn'])):
-
-            $search_box = $_POST['search_box'];
-            $select_listings = $conn->prepare("SELECT * FROM `properties` WHERE property_name LIKE '%{$search_box}%' OR address LIKE '%{$search_box}%' ORDER BY date DESC");
-            $select_listings->execute();
-
-          else:
-
-            $select_listings = $conn->prepare("SELECT * FROM `properties` ORDER BY date DESC");
-            $select_listings->execute();
-
-          endif;
 
           if ($select_listings->rowCount() > 0):
 
@@ -198,10 +203,12 @@
         <?php
 
             endwhile;
+            unset($_SESSION['search_sql']);
 
-          elseif (isset($_POST['search_box']) || isset($_POST['search_btn'])):
+          elseif (isset($_SESSION['search_sql'])):
 
             echo '<p class="empty">no results found</p>';
+            unset($_SESSION['search_sql']);
 
           else:
 
