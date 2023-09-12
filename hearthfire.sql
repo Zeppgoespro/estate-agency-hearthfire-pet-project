@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: mysql-hearthfire
--- Время создания: Сен 12 2023 г., 18:32
+-- Время создания: Сен 12 2023 г., 18:38
 -- Версия сервера: 8.0.34
 -- Версия PHP: 8.2.9
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- База данных: `hearthfire`
 --
-CREATE DATABASE IF NOT EXISTS `hearthfire` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `hearthfire`;
 
 -- --------------------------------------------------------
 
